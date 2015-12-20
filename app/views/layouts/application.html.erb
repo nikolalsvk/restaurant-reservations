@@ -8,10 +8,14 @@
 </head>
 <body>
 
+<%= nav_bar static: :top  %>
+
 <p class="notice"><%= notice %></p>
 <p class="alert"><%= alert %></p>
 
-<%= yield %>
+<div class="container">
+  <%= yield %>
+</div>
 
 </body>
 </html>
