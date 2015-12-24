@@ -25,6 +25,7 @@ gem 'sdoc', '~> 0.4.0', group: :doc
 
 # Devise gem for login
 gem 'devise'
+gem 'devise-bootstrap-views'
 
 # Twitter Bootstrap gem
 gem "twitter-bootstrap-rails"
