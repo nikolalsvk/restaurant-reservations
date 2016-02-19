@@ -1,6 +1,22 @@
 <div id="main-container" class="container">
   <h1>Welcome to Restaurant Reservations</h1>
 
+  <% unless current_user %>
+    <div class="text-center">
+      <p>
+        <%= button_to "Login", new_user_session_path,
+                      :class => "btn btn-primary btn-lg"%></br>
+        <%= button_to "Sign up", new_user_registration_path,
+                      :class => "btn btn-primary btn-lg"%>
+      </p>
+    </div>
+  <% end %>
+
+  <div id="owl-demo" class="owl-carousel owl-theme">
+    <div><%= image_tag("food-pizza-fast-food.jpg") %></div>
+    <div><%= image_tag("food-salad-healthy-colorful.jpg") %></div>
+    <div><%= image_tag("salad-healthy-diet-spinach.jpg") %></div>
+  </div>
 
   <p>Made by nikolalsvk</p>
 </div>

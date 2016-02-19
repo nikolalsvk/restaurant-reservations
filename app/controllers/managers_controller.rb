@@ -70,7 +70,6 @@ class ManagersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def manager_params
-      byebug
       params[:manager].permit(:email, :first_name, :last_name,
                               :phone_number, :address, :password,
                               :password_confirmation, :confirmed_at)
