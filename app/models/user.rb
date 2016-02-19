@@ -5,12 +5,24 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
-  before_create :set_user_role
+  before_create :set_role
+
+  def admin?
+    self.role == "admin"
+  end
+
+  def guest?
+    self.role == "guest"
+  end
+
+  def manager?
+    self.role == "manager"
+  end
 
   private
 
-  def set_user_role
-    self.role = "user"
+  def set_role
+    self.role = "user" unless self.role
   end
 
 end

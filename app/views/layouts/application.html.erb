@@ -9,11 +9,19 @@
 <body>
 
 <div id="wrap">
-  <%= nav_bar static: :top  %>
+  <%= nav_bar static: :top do %>
+    <% if current_user %>
+      <%= link_to "Add manager", new_manager_path if current_user.admin? %>
+    <% end %>
+  <% end %>
 
   <div class="container">
-    <p class="notice"><%= notice %></p>
-    <p class="alert"><%= alert %></p>
+    <% if notice %>
+      <p class="alert alert-success" id="notice"><%= notice %></p>
+    <% end %>
+    <% if alert %>
+      <p class="alert alert-danger" id="alert"><%= alert %></p>
+    <% end %>
   </div>
 
   <div class="container">
