@@ -7,16 +7,17 @@ Rails.application.configure do
   config.cache_classes = false
 
   # Devise config
-  config.action_mailer.default_url_options = { host: 'localhost' }
+  config.action_mailer.default_url_options = { host: 'localhost:3000' }
+
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :tls => true,
     :address => "smtp.gmail.com",
     :port => 587,
     :domain => "gmail.com",
+    :user_name => "nikolaseap@gmail.com",
+    :password => "rmmberths",
     :authentication => :login,
-    :user_name => "nikolaseap",
-    :password => "rmmberths"
+    :enable_starttls_auto => true
   }
 
   # Do not eager load code on boot.
