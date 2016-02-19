@@ -5,6 +5,9 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
+  belongs_to :restaurant, -> { where(:role => "manager") }
+  has_many :friends, -> { where(:role => "guest") }, :class_name => "User"
+
   before_create :set_role
 
   def admin?
@@ -22,7 +25,7 @@ class User < ActiveRecord::Base
   private
 
   def set_role
-    self.role = "user" unless self.role
+    self.role ||= "guest"
   end
 
 end

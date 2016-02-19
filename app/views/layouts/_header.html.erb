@@ -1,6 +1,8 @@
 <%= nav_bar static: :top do %>
   <%= menu_group :pull => :left do %>
     <%= menu_item "Home", root_path %>
+    <%= menu_item "Restaurants", restaurants_path %>
+    <%= menu_item "Friends", friends_path if current_user && current_user.guest? %>
   <% end %>
   <%= menu_group :pull => :right do %>
 

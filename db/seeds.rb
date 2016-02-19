@@ -12,3 +12,14 @@ admin = Admin.new(:email => "admin@reservations.com",
                   :confirmed_at => DateTime.now)
 admin.skip_confirmation!
 admin.save!
+
+res_eat_good = Restaurant.create!(:title => "Eat good",
+                                  :description => "Vegan")
+
+manager = Manager.new(:email => "manager@reservations.com",
+                      :password => "managermanager",
+                      :password_confirmation => "managermanager",
+                      :restaurant => res_eat_good,
+                      :confirmed_at => DateTime.now)
+manager.skip_confirmation!
+manager.save!

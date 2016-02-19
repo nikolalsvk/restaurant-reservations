@@ -19,16 +19,22 @@ ActiveRecord::Schema.define(version: 20160219174852) do
   create_table "meals", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
+    t.integer  "menu_id"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
+  add_index "meals", ["menu_id"], name: "index_meals_on_menu_id", using: :btree
+
   create_table "menus", force: :cascade do |t|
     t.string   "title"
     t.string   "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.integer  "restaurant_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
+
+  add_index "menus", ["restaurant_id"], name: "index_menus_on_restaurant_id", using: :btree
 
   create_table "restaurants", force: :cascade do |t|
     t.string   "title"
@@ -42,6 +48,7 @@ ActiveRecord::Schema.define(version: 20160219174852) do
     t.string   "last_name"
     t.string   "phone_number"
     t.string   "address"
+    t.integer  "restaurant_id"
     t.string   "role",                                null: false
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
