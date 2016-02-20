@@ -15,6 +15,8 @@ admin.save!
 
 res_eat_good = Restaurant.create!(:title => "Eat good",
                                   :description => "Vegan")
+every_nice = Restaurant.create!(:title => "Everything is nice here",
+                                  :description => "Meat")
 
 manager = Manager.new(:email => "manager@reservations.com",
                       :password => "managermanager",
@@ -23,3 +25,12 @@ manager = Manager.new(:email => "manager@reservations.com",
                       :confirmed_at => DateTime.now)
 manager.skip_confirmation!
 manager.save!
+
+10.times do |number|
+  guest = Guest.new(:email => "guest_#{number}@reservations.com",
+                    :password => "guestguest",
+                    :password_confirmation => "guestguest",
+                    :confirmed_at => DateTime.now)
+  guest.skip_confirmation!
+  guest.save!
+end

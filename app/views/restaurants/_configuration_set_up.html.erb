@@ -1,0 +1,21 @@
+<%= if current_user.manager? %>
+  <%= form_tag restaurant_configuration_setup_seats_path(@restaurant, @configuration) do %>
+    <table>
+      <tbody>
+      <% @configuration.height.times do |rows| %>
+        <tr>
+          <% @configuration.width.times do |cols| %>
+            <%= hidden_field_tag("seat_#{rows}_#{cols}[x]", rows) %>
+            <%= hidden_field_tag("seat_#{rows}_#{cols}[y]", cols) %>
+            <td><%= check_box_tag("seat_#{rows}_#{cols}[reserved]", true, false,
+                                  :class => "configuration-check-box") %></td>
+          <% end %>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+    <%= submit_tag "Setup configuration" %>
+  <% end %>
+<% else %>
+  <h4>Sorry, this restaurant configuration is not set up yet. Please check later.</h4>
+<% end %>

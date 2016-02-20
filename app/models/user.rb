@@ -6,7 +6,8 @@ class User < ActiveRecord::Base
          :confirmable
 
   belongs_to :restaurant, -> { where(:role => "manager") }
-  has_many :friends, -> { where(:role => "guest") }, :class_name => "User"
+
+  has_many :friendships
 
   before_create :set_role
 
@@ -20,6 +21,10 @@ class User < ActiveRecord::Base
 
   def manager?
     self.role == "manager"
+  end
+
+  def restaurant_manager(restaurant)
+    self.restaurant_id == restaurant.id
   end
 
   private

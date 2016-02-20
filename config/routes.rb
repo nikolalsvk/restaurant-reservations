@@ -1,5 +1,4 @@
 Rails.application.routes.draw do
-  resources :restaurants
   devise_for :users
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -9,9 +8,16 @@ Rails.application.routes.draw do
 
   resources :managers
 
-  resources :restaurants
+  resources :restaurants do
+    resources :configurations, :only => [:create] do
+      post :setup_seats
+      resources :seats
+    end
+  end
 
-  resources :friends
+  resource :users do
+    resources :friendships
+  end
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

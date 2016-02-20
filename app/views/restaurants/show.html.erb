@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Title:</strong>
   <%= @restaurant.title %>
@@ -10,5 +8,53 @@
   <%= @restaurant.description %>
 </p>
 
-<%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
+<h3>Seats</h3>
+<% if @seats.present? %>
+  <% cache([@configuration, @seats]) do %>
+  <table>
+    <% @configuration.height.times do |rows| %>
+      <tr>
+        <% @configuration.width.times do |cols| %>
+          <td><%= seats_check_box(@configuration, rows, cols) %></td>
+        <% end %>
+      </tr>
+    <% end %>
+  </table>
+  <% end %>
+<% else %>
+  <%= render "configuration_set_up" %>
+<% end %>
+
+<% if @restaurant.managers.present? %>
+  <h3>Managers</h3>
+  <table>
+    <thead>
+      <tr>
+        <th>First name</th>
+        <th>Last name</th>
+        <th>Phone number</th>
+        <th>Address</th>
+        <th>Email</th>
+        <th colspan="3"></th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <% @restaurant.managers.each do |manager| %>
+        <tr>
+          <td><%= manager.first_name %>
+          <td><%= manager.last_name %>
+          <td><%= manager.phone_number %>
+          <td><%= manager.address %>
+          <td><%= manager.email %>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% end %>
+
+
+<% if current_user.restaurant_manager(@restaurant) %>
+  <%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
+<% end %>
 <%= link_to 'Back', restaurants_path %>

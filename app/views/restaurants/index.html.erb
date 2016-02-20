@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Listing Restaurants</h1>
 
 <table>
@@ -17,8 +15,8 @@
         <td><%= restaurant.title %></td>
         <td><%= restaurant.description %></td>
         <td><%= link_to 'Show', restaurant %></td>
-        <td><%= link_to 'Edit', edit_restaurant_path(restaurant) %></td>
-        <td><%= link_to 'Destroy', restaurant, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to 'Edit', edit_restaurant_path(restaurant) if current_user.restaurant_manager(restaurant) %></td>
+        <td><%= link_to 'Destroy', restaurant, method: :delete, data: { confirm: 'Are you sure?' }  if current_user.admin? %></td>
       </tr>
     <% end %>
   </tbody>
@@ -26,4 +24,4 @@
 
 <br>
 
-<%= link_to 'New Restaurant', new_restaurant_path %>
+<%= link_to 'New Restaurant', new_restaurant_path if current_user.admin? %>

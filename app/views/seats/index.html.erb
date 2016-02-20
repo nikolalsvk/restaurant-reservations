@@ -1,0 +1,33 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Seats</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>X</th>
+      <th>Y</th>
+      <th>Reserved</th>
+      <th>Configuration</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @seats.each do |seat| %>
+      <tr>
+        <td><%= seat.x %></td>
+        <td><%= seat.y %></td>
+        <td><%= seat.reserved %></td>
+        <td><%= seat.configuration %></td>
+        <td><%= link_to 'Show', seat %></td>
+        <td><%= link_to 'Edit', edit_seat_path(seat) %></td>
+        <td><%= link_to 'Destroy', seat, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Seat', new_seat_path %>

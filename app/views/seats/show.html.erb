@@ -1,0 +1,24 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>X:</strong>
+  <%= @seat.x %>
+</p>
+
+<p>
+  <strong>Y:</strong>
+  <%= @seat.y %>
+</p>
+
+<p>
+  <strong>Reserved:</strong>
+  <%= @seat.reserved %>
+</p>
+
+<p>
+  <strong>Configuration:</strong>
+  <%= @seat.configuration %>
+</p>
+
+<%= link_to 'Edit', edit_seat_path(@seat) %> |
+<%= link_to 'Back', seats_path %>
