@@ -8,6 +8,7 @@
 
     <% if current_user %>
       <%= menu_item "Add manager", new_manager_path if current_user.admin? %>
+      <%= menu_item "My profile", guest_path(current_user) if current_user.guest? %>
     <% end %>
 
   <% end %>

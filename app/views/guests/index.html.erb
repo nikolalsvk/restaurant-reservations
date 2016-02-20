@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <h1>Listing Guests</h1>
 
 <table>
@@ -23,13 +21,7 @@
         <td><%= guest.address %></td>
         <td><%= guest.email %></td>
         <td><%= link_to 'Show', guest %></td>
-        <td><%= link_to 'Edit', edit_guest_path(guest) %></td>
-        <td><%= link_to 'Destroy', guest, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
-
-<br>
-
-<%= link_to 'New Guest', new_guest_path %>
