@@ -15,11 +15,10 @@
     </div>
   <% end %>
 
+  <% if current_user %>
+    <%= render "invitations" %>
+  <% end %>
+
   </br>
-  <div id="owl-demo" class="owl-carousel owl-theme">
-    <div><%= image_tag("food-pizza-fast-food.jpg") %></div>
-    <div><%= image_tag("food-salad-healthy-colorful.jpg") %></div>
-    <div><%= image_tag("salad-healthy-diet-spinach.jpg") %></div>
-  </div>
 
 </div>

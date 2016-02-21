@@ -8,6 +8,7 @@ class User < ActiveRecord::Base
   belongs_to :restaurant, -> { where(:role => "manager") }
 
   has_many :friendships
+  has_many :invitations
 
   before_create :set_role
 

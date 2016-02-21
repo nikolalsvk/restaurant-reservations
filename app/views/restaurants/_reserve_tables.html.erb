@@ -65,9 +65,8 @@
         <tr>
           <td><%= friendship.friend.first_name %>
           <td><%= friendship.friend.last_name %>
-          <%= hidden_field_tag("friendship_#{friendship.id}", friendship.id) %>
-          <%= hidden_field_tag("friendship_#{friendship.id}", friendship.id) %>
-          <td><%= check_box_tag("friendship_#{friendship.id}", true, false) %></td>
+          <%= hidden_field_tag("friendship_#{friendship.id}[friend_id]", friendship.friend_id) %>
+          <td><%= check_box_tag("friendship_#{friendship.id}[selected]", true, false) %></td>
         </tr>
       <% end %>
     </table>

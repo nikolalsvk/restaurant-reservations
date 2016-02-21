@@ -4,6 +4,7 @@ class CreateInvitations < ActiveRecord::Migration
       t.integer :user_id
       t.boolean :confirmed
       t.references :user, :index => true
+      t.references :reservation, :index => true
 
       t.timestamps null: false
     end

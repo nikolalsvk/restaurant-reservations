@@ -26,10 +26,12 @@ ActiveRecord::Schema.define(version: 20160221125216) do
   create_table "invitations", force: :cascade do |t|
     t.integer  "user_id"
     t.boolean  "confirmed"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "reservation_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
   end
 
+  add_index "invitations", ["reservation_id"], name: "index_invitations_on_reservation_id", using: :btree
   add_index "invitations", ["user_id"], name: "index_invitations_on_user_id", using: :btree
 
   create_table "meals", force: :cascade do |t|
@@ -56,9 +58,12 @@ ActiveRecord::Schema.define(version: 20160221125216) do
     t.datetime "date"
     t.integer  "duration"
     t.integer  "user_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "restaurant_id"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
   end
+
+  add_index "reservations", ["restaurant_id"], name: "index_reservations_on_restaurant_id", using: :btree
 
   create_table "reservations_seats", id: false, force: :cascade do |t|
     t.integer  "seat_id"

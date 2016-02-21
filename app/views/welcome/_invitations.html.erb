@@ -1,0 +1,38 @@
+<% unless current_user.invitations.empty? %>
+  <h4>Invitations</h4>
+  <% current_user.invitations.each do |invitation| %>
+    <div class="col-md-4">
+      <p>
+        Your friend, <b><%= invitation.first_name %></b> has invited you to
+        <b><%= invitation.restaurant.title %></b> restaurant.
+
+        When?
+        <b><%= invitation.date %></b>
+        for
+        <b><%= invitation.duration %> hours</b>
+        Who else is coming?
+        <% invitation.reservation.invitations.each do |invite| %>
+          <% unless invite.user.id == current_user.id %>
+            <b><%= invite.first_name %> <%= invite.last_name %> </b>
+          <% end %>
+        <% end %>
+      </p>
+
+      <% unless invitation.confirmed %>
+        <div class="row">
+          <%= button_to "Accept", guest_invitation_path(current_user,
+                                                        invitation,
+                                                        :invitation => { :confirmed => true }),
+                                                        :method => :put,
+                                                        :class => "btn btn-primary" %>
+          <%= button_to "Decline", guest_invitation_path(current_user,
+                                                        invitation),
+                                                        :method => :delete,
+                                                        :class => "btn btn-danger" %>
+        </div>
+      <% end %>
+    </div>
+
+
+  <% end %>
+<% end %>
