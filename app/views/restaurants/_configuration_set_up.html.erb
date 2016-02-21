@@ -1,4 +1,4 @@
-<%= if current_user.manager? %>
+<% if current_user.manager? %>
   <%= form_tag restaurant_configuration_setup_seats_path(@restaurant, @configuration) do %>
     <table>
       <tbody>
@@ -14,7 +14,7 @@
       <% end %>
       </tbody>
     </table>
-    <%= submit_tag "Setup configuration" %>
+    <%= submit_tag "Setup configuration", :class => "btn btn-primary" %>
   <% end %>
 <% else %>
   <h4>Sorry, this restaurant configuration is not set up yet. Please check later.</h4>

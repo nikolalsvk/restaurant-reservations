@@ -21,7 +21,8 @@ class ConfigurationsController < ApplicationController
 
     seat_info.each do |seat|
       @configuration.seats.new(:x => seat[:x],
-                               :y => seat[:y])
+                               :y => seat[:y],
+                               :reserved => false)
     end
 
     respond_to do |format|

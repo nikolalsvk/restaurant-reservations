@@ -8,6 +8,7 @@ class RestaurantsController < ApplicationController
   def show
     @configuration = @restaurant.seats_configuration
     @seats = @configuration.seats
+    @date = params[:date]
   end
 
   def new

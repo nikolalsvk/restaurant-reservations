@@ -27,7 +27,7 @@
 
 
 <h3>Search other guests:</h3>
-<%= form_tag(guest_path(current_user), :method => :get,) do %>
+<%= form_tag(guest_path(current_user), :method => :get) do %>
   <%= text_field_tag :search, params[:search], :placeholder => "Search other guests" %>
   <%= submit_tag "Search" %>
 <% end %>

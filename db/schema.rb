@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20160220134755) do
+ActiveRecord::Schema.define(version: 20160221125216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,6 +22,15 @@ ActiveRecord::Schema.define(version: 20160220134755) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
+
+  create_table "invitations", force: :cascade do |t|
+    t.integer  "user_id"
+    t.boolean  "confirmed"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "invitations", ["user_id"], name: "index_invitations_on_user_id", using: :btree
 
   create_table "meals", force: :cascade do |t|
     t.string   "title"
@@ -42,6 +51,21 @@ ActiveRecord::Schema.define(version: 20160220134755) do
   end
 
   add_index "menus", ["restaurant_id"], name: "index_menus_on_restaurant_id", using: :btree
+
+  create_table "reservations", force: :cascade do |t|
+    t.datetime "date"
+    t.time     "duration"
+    t.integer  "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "reservations_seats", id: false, force: :cascade do |t|
+    t.integer  "seat_id"
+    t.integer  "reservation_id"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
+  end
 
   create_table "restaurants", force: :cascade do |t|
     t.string   "title"

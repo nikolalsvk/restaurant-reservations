@@ -15,5 +15,7 @@
 //= require jquery_ujs
 //= require twitter/bootstrap
 //= require owl.carousel
+//= require moment
+//= require bootstrap-datetimepicker
 //= require_tree .
 //= require turbolinks

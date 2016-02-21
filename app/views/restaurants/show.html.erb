@@ -10,17 +10,7 @@
 
 <h3>Seats</h3>
 <% if @seats.present? %>
-  <% cache([@configuration, @seats]) do %>
-  <table>
-    <% @configuration.height.times do |rows| %>
-      <tr>
-        <% @configuration.width.times do |cols| %>
-          <td><%= seats_check_box(@configuration, rows, cols) %></td>
-        <% end %>
-      </tr>
-    <% end %>
-  </table>
-  <% end %>
+  <%= render "reserve_tables" %>
 <% else %>
   <%= render "configuration_set_up" %>
 <% end %>

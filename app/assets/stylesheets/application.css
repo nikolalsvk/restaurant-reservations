@@ -12,6 +12,8 @@
  *
  *= require owl.carousel
  *= require owl.theme
+ *= require bootstrap_and_overrides
+ *= require bootstrap-datetimepicker
  *= require_tree .
  *= require_self
  */
