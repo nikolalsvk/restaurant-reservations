@@ -15,6 +15,7 @@
   <%= render "configuration_set_up" %>
 <% end %>
 
+<div class="col-md-6">
 <% if @restaurant.managers.present? %>
   <h3>Managers</h3>
   <table>
@@ -43,8 +44,8 @@
   </table>
 <% end %>
 
-
 <% if current_user.restaurant_manager(@restaurant) %>
   <%= link_to 'Edit', edit_restaurant_path(@restaurant) %> |
 <% end %>
 <%= link_to 'Back', restaurants_path %>
+</div>

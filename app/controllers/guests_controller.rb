@@ -7,6 +7,7 @@ class GuestsController < ApplicationController
   end
 
   def show
+    @friendships = current_user.friendships
   end
 
   def edit

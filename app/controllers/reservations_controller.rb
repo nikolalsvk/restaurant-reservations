@@ -25,17 +25,30 @@ class ReservationsController < ApplicationController
   # POST /reservations
   # POST /reservations.json
   def create
-    byebug
-    @reservation = Reservation.new(:date => Date.parse(reservation_params[:date]),
-                                   :duration => reservation_params[:duration],
-                                   :user_id => current_user.id)
+    seats = params.select { |key| key.to_s.include?("seat") }
+    seat_info = seats.values.select { |values| values[:reserved] }
 
-    respond_to do |format|
-      if @reservation.save
-        format.html { redirect_to @restaurant, notice: 'Reservation was successfully created.' }
-      else
-        format.html { redirect_to @restaurant, :alert => @reservation.errors }
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
+    if seat_info.empty?
+      redirect_to @restaurant, alert: 'You have to choose a table first'
+    else
+      ActiveRecord::Base.transaction do
+        @reservation = Reservation.new(:date => reservation_params[:date],
+                                       :duration => reservation_params[:duration][0],
+                                       :user_id => current_user.id)
+
+        seat_info.each do |seat|
+          seat = Seat.where(:x => seat[:x],
+                            :y => seat[:y]).first
+
+          seat.with_lock do
+            seat.reservations << @reservation
+
+            unless seat.save
+              redirect_to @restaurant, :alert => @reservation.errors and return
+            end
+          end
+        end
+        redirect_to @restaurant, notice: 'Reservation was successfully created.' and return
       end
     end
   end

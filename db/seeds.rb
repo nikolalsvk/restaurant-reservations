@@ -15,6 +15,13 @@ admin.save!
 
 res_eat_good = Restaurant.create!(:title => "Eat good",
                                   :description => "Vegan")
+configuration_1 = SeatsConfiguration.new(:restaurant_id => res_eat_good.id)
+
+15.times do |number|
+  configuration_1.seats.new(:x => rand(10), :y => rand(10))
+end
+configuration_1.save!
+
 every_nice = Restaurant.create!(:title => "Everything is nice here",
                                 :description => "Meat")
 

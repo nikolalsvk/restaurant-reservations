@@ -27,6 +27,10 @@ class User < ActiveRecord::Base
     self.restaurant_id == restaurant.id
   end
 
+  def friend?(guest)
+    !Friendship.where(:user_id => self.id, :friend_id => guest.id).empty?
+  end
+
   private
 
   def set_role

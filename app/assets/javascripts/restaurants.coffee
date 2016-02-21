@@ -3,7 +3,7 @@
 # You can use CoffeeScript in this file: http://coffeescript.org/
 $ ->
   $('#datetimepicker1').datetimepicker(
-    format: "YYYY-MM-D HH-mm-ss"
+    format: "YYYY-MM-D HH:mm:ss"
     minDate: new Date()
   )
 

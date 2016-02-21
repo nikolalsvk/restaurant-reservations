@@ -1,7 +1,10 @@
+<div class="col-md-6" >
 <% if current_user.guest? %>
   <div class="input-group date">
   <%= form_tag(restaurant_path(@restaurant), :method => :get) do %>
+
     <%= label_tag :date, "Choose a date for your reservation" %>
+
     <div class="form-group">
       <div class='input-group date' id='datetimepicker1'>
         <%= text_field_tag :date,
@@ -12,13 +15,19 @@
         </span>
       </div>
       <%= label_tag :duration, "How long would you like to stay?" %>
-      <%= select_tag :duration, "<option>1 hour</option><option>2 hours</option>".html_safe %>
+      <%= select_tag :duration, "<option>1 hour</option>
+                                <option>2 hours</option>
+                                <option>3 hours</option>".html_safe,
+                                :class => "input-group date" %>
     </div>
-  <%= submit_tag "Show", :class => "form-control" %></br>
+    </br>
+
+    <%= submit_tag "Show", :class => "form-control" %></br>
   <% end %>
   </div></br>
 <% end %>
 
+<% if params[:date] && params[:duration] %>
   <%= form_tag restaurant_reservations_path(@restaurant) do %>
     <table>
 
@@ -26,21 +35,20 @@
       <% cache([@configuration, @seats]) do %>
         <% @configuration.height.times do |rows| %>
           <tr>
-          <% @configuration.width.times do |cols| %>
-            <td>
-            <div data-toggle="buttons" class="btn-group itemcontent">
-              <label class="btn btn-default">
+            <% @configuration.width.times do |cols| %>
+              <td>
+              <div data-toggle="buttons" class="btn-group itemcontent">
                 <%= seats_check_box(@configuration, rows, cols, @date || Time.now) %>
-              </label>
-            </div>
-            </td>
-          <% end %>
-        </tr>
-      <% end %>
+              </div>
+              </td>
+            <% end %>
+          </tr>
+        <% end %>
       </tbody>
 
     </table>
-
+    </div>
+    <div class="col-md-6">
     <h4>Invite a friend to a restaurant</h4>
 
     <table>
@@ -67,7 +75,9 @@
     <%= hidden_field_tag("reservation[date]", params[:date]) %>
     <%= hidden_field_tag("reservation[duration]", params[:duration]) %>
 
-    <%= submit_tag "Make a reservation", :class => "btn btn-primary" %>
+    <%= submit_tag "Make a reservation", :class => "btn btn-primary" if current_user.guest? %>
 
   <% end %>
 <% end %>
+<% end %>
+</div>
