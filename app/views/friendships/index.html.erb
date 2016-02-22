@@ -1,7 +1,11 @@
-<h1>My friends</h1>
+<div class="row">
 
 <%= render "friends_table" %>
 
-<br>
+</div>
+<div class="row">
 
-<%= link_to 'New Friendship', new_users_friendship_path %>
+<%= render "friendships/search_friends", :path => users_friendships_path(current_user) %>
+
+</div>
+<br>

@@ -3,28 +3,13 @@ class ReservationsController < ApplicationController
   before_action :set_restaurant, :only => [:create]
   before_action :set_seat_info, :only => [:create]
 
-  # GET /reservations
-  # GET /reservations.json
   def index
     @reservations = current_user.reservations.all
   end
 
-  # GET /reservations/1
-  # GET /reservations/1.json
   def show
   end
 
-  # GET /reservations/new
-  def new
-    @reservation = Reservation.new
-  end
-
-  # GET /reservations/1/edit
-  def edit
-  end
-
-  # POST /reservations
-  # POST /reservations.json
   def create
     friends = params.select { |key| key.to_s.include?("friendship") }
     @friends_info = friends.values.select { |values| values[:selected] }
@@ -39,8 +24,8 @@ class ReservationsController < ApplicationController
                                        :user_id => current_user.id)
 
         @seat_info.each do |seat|
-          seat = Seat.where(:x => seat[:x],
-                            :y => seat[:y]).first
+          seat = @restaurant.seats_configuration.seats.where(:x => seat[:x],
+                                                             :y => seat[:y]).first
 
           seat.with_lock do
             if seat.reserved?(reservation_params[:date])
@@ -72,8 +57,6 @@ class ReservationsController < ApplicationController
     end
   end
 
-  # PATCH/PUT /reservations/1
-  # PATCH/PUT /reservations/1.json
   def update
     respond_to do |format|
       if @reservation.update(reservation_params)
@@ -86,33 +69,21 @@ class ReservationsController < ApplicationController
     end
   end
 
-  # DELETE /reservations/1
-  # DELETE /reservations/1.json
-  def destroy
-    @reservation.destroy
-    respond_to do |format|
-      format.html { redirect_to reservations_url, notice: 'Reservation was successfully destroyed.' }
-      format.json { head :no_content }
-    end
+  private
+  def set_reservation
+    @reservation = Reservation.find(params[:id])
   end
 
-  private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_reservation
-      @reservation = Reservation.find(params[:id])
-    end
+  def set_seat_info
+    seats = params.select { |key| key.to_s.include?("seat") }
+    @seat_info = seats.values.select { |values| values[:reserved] }
+  end
 
-    def set_seat_info
-      seats = params.select { |key| key.to_s.include?("seat") }
-      @seat_info = seats.values.select { |values| values[:reserved] }
-    end
+  def set_restaurant
+    @restaurant = Restaurant.find(params[:restaurant_id])
+  end
 
-    def set_restaurant
-      @restaurant = Restaurant.find(params[:restaurant_id])
-    end
-
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def reservation_params
-      params.require(:reservation).permit(:date, :duration)
-    end
+  def reservation_params
+    params.require(:reservation).permit(:date, :duration)
+  end
 end

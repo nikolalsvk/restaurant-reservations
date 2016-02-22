@@ -1,49 +1,19 @@
 class InvitationsController < ApplicationController
   before_action :set_invitation, only: [:show, :edit, :update, :destroy]
   skip_before_filter :verify_authenticity_token, :only => [:update]
+  before_filter :authenticate_user!, :except => [:update]
 
-  # GET /invitations
-  # GET /invitations.json
   def index
     @invitations = Invitation.all
   end
 
-  # GET /invitations/1
-  # GET /invitations/1.json
   def show
   end
 
-  # GET /invitations/new
-  def new
-    @invitation = Invitation.new
-  end
-
-  # GET /invitations/1/edit
-  def edit
-  end
-
-  # POST /invitations
-  # POST /invitations.json
-  def create
-    @invitation = Invitation.new(invitation_params)
-
-    respond_to do |format|
-      if @invitation.save
-        format.html { redirect_to @invitation, notice: 'Invitation was successfully created.' }
-        format.json { render :show, status: :created, location: @invitation }
-      else
-        format.html { render :new }
-        format.json { render json: @invitation.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /invitations/1
-  # PATCH/PUT /invitations/1.json
   def update
     respond_to do |format|
       if @invitation.update(invitation_params)
-        format.html { redirect_to root_path, notice: 'Invitation was successfully updated.' }
+        format.html { redirect_to root_path, notice: "Thanks #{@user.first_name}, you have accepted an invitation to #{@invitation.restaurant.title} restaurant." }
         format.json { render :show, status: :ok, location: @invitation }
       else
         format.html { render :edit }
@@ -52,8 +22,6 @@ class InvitationsController < ApplicationController
     end
   end
 
-  # DELETE /invitations/1
-  # DELETE /invitations/1.json
   def destroy
     @invitation.destroy
     respond_to do |format|
@@ -63,19 +31,22 @@ class InvitationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_invitation
-      if current_user.id == params[:guest_id]
+  def set_invitation
+    if current_user
+      if params[:guest_id] && current_user.id == params[:guest_id]
         @invitation = current_user.invitations.find(params[:id])
+        @user = current_user
       else
-        user = Guest.find(params[:guest_id])
-        @invitation = user.invitations.find(params[:id])
+        @invitation = current_user.invitations.find(params[:id])
+        @user = current_user
       end
-
+    else
+      @user = Guest.find(params[:guest_id])
+      @invitation = @user.invitations.find(params[:id])
     end
+  end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def invitation_params
-      params.require(:invitation).permit(:user_id, :confirmed)
-    end
+  def invitation_params
+    params.require(:invitation).permit(:user_id, :confirmed)
+  end
 end

@@ -4,6 +4,7 @@ class DeviseCreateUsers < ActiveRecord::Migration
       ## User information
       t.string :first_name
       t.string :last_name
+      t.string :full_name
       t.string :phone_number
       t.string :address
       t.integer :restaurant_id

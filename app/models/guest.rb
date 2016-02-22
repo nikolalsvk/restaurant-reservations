@@ -10,7 +10,7 @@ class Guest < User
   end
 
   def self.search(search)
-    where("first_name ILIKE ? OR last_name ILIKE ?", "%#{search}%", "%#{search}%")
+    where("first_name ILIKE ? OR last_name ILIKE ? OR full_name ILIKE ?", "%#{search}%", "%#{search}%", "%#{search}%")
   end
 
 end

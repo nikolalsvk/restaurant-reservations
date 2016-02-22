@@ -3,6 +3,7 @@
     <div class="panel panel-heading">My visits:</div>
       <div class="panel panel-body">
         <% current_user.reservations.each { |res| res.expired? } %>
+        <% current_user.invitations.each { |res| res.expired? } %>
         <% if current_user.reviews.empty? %>
           You haven't visited any restaurants yet!
         <% else %>
@@ -26,12 +27,12 @@
                     <% if review.reservation.invitations.empty? %>
                       You went alone
                     <% else %>
-                      <% if review.reservation.invitations.count == 1 %>
-                        <% review.reservation.invitations.each do |invitation| %>
+                      <% review.reservation.invitations.each do |invitation, index| %>
+                        <% if invitation == review.reservation.invitations.last %>
                           <%= invitation.user.first_name %>
-                        <% end %>
-                      <% else %>
+                        <% else %>
                           <%= invitation.user.first_name %>,
+                        <% end %>
                       <% end %>
                     <% end %>
                   </td>

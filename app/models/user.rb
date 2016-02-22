@@ -13,6 +13,7 @@ class User < ActiveRecord::Base
   has_many :reviews
 
   before_create :set_role
+  before_save :set_full_name
 
   def admin?
     self.role == "admin"
@@ -53,6 +54,12 @@ class User < ActiveRecord::Base
 
   def set_role
     self.role ||= "guest"
+  end
+
+  def set_full_name
+    if self.first_name && self.last_name
+      self.full_name = "#{self.first_name} #{self.last_name}"
+    end
   end
 
 end

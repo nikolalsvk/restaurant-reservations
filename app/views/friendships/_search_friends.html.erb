@@ -1,0 +1,40 @@
+<div class="col-md-4">
+  <div class="panel panel-default">
+    <div class="panel panel-heading">Search other guests:</div>
+    <div class="panel panel-body">
+      <%= form_tag(path, :method => :get, :class => "form-inline") do %>
+        <div class="form-group">
+          <%= text_field_tag :search,
+                             params[:search],
+                             :placeholder => "Search other guests",
+                             :class => "form-control" %>
+          <%= submit_tag "Search", :class => "btn btn-info" %>
+        </div>
+      <% end %>
+
+      <% if @guest_search %>
+        <% unless @guest_search.empty? %>
+          <p>Results:</p>
+          <table>
+            <% @guest_search.each do |guest| %>
+              <% unless current_user.id == guest.id %>
+                <tr>
+                  <td><%= guest.first_name %>
+                  <td><%= guest.last_name %>
+                  <td><%= link_to "Add as friend",
+                                  users_friendships_path(:friendship => { :user_id => current_user.id,
+                                                                          :friend_id => guest.id }),
+                                  :method => :post,
+                                  :remote => true,
+                                  :class => "btn btn-primary add-friend" unless current_user.friend?(guest) %>
+                </tr>
+              <% end %>
+            <% end %>
+          </table>
+        <% else %>
+          <p>Sorry, no one matches your criteria <%= params[:search] %></p>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+</div>

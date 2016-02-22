@@ -31,6 +31,12 @@
     <%= f.label :address %>
     <%= f.text_field :address, class: "form-control" %>
   </div>
+  <% if current_user.admin? %>
+    <div class="form-group">
+      <%= f.label :restaurant %>
+      <%= f.collection_select :restaurant_id, Restaurant.all, :id, :title, class: "form-control" %>
+    </div>
+  <% end %>
   <div class="form-group">
     <%= f.label :password %><br />
     <%= f.password_field :password, class: "form-control" %>

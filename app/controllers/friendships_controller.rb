@@ -1,16 +1,13 @@
 class FriendshipsController < ApplicationController
   before_action :set_friendship, only: [:show, :edit, :destroy]
   before_action :set_friend, :only => [:create, :destroy]
+  before_action :set_guests, :only => [:index]
 
   def index
     @friendships = current_user.friendships.all
   end
 
   def show
-  end
-
-  def new
-    @friendship = current_user.friendships.new
   end
 
   def create
@@ -49,6 +46,12 @@ class FriendshipsController < ApplicationController
 
   def set_friend
     @friend = Guest.find(params[:friend_id] || friendship_params[:friend_id])
+  end
+
+  def set_guests
+    if params[:search]
+      @guest_search = Guest.search(params[:search])
+    end
   end
 
   def friendship_params

@@ -22,7 +22,7 @@
         <% if current_user.guest? %>
           <td><%= current_user.friends_rating(restaurant.id) %>
         <% end %>
-        <td><%= link_to 'Reseravation', restaurant %></td>
+        <td><%= link_to 'Reservation', restaurant %></td>
         <td><%= link_to 'Your reservations', restaurant_reservations_path(restaurant) %>
         <td><%= link_to 'Edit', edit_restaurant_path(restaurant) if current_user.restaurant_manager(restaurant) %></td>
         <td><%= link_to 'Destroy', restaurant, method: :delete, data: { confirm: 'Are you sure?' }  if current_user.admin? %></td>
