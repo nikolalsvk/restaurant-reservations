@@ -3,6 +3,7 @@
     <%= menu_item "Home", root_path %>
     <%= menu_item "Restaurants", restaurants_path %>
     <%= menu_item "Friends", users_friendships_path if current_user && current_user.guest? %>
+    <%= menu_item "Visits", users_reviews_path if current_user && current_user.guest? %>
   <% end %>
   <%= menu_group :pull => :right do %>
 

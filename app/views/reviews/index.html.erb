@@ -3,6 +3,10 @@
 <table>
   <thead>
     <tr>
+      <th>Restaurant</th>
+      <th>Date</th>
+      <th>Duration (hours)</th>
+      <th>Rating</th>
       <th colspan="3"></th>
     </tr>
   </thead>
@@ -10,6 +14,10 @@
   <tbody>
     <% @reviews.each do |review| %>
       <tr>
+        <td><%= review.restaurant.title %>
+        <td><%= review.reservation.date %>
+        <td><%= review.reservation.duration %>
+        <td><%= review.rating ? review.rating : "Not yet rated" %>
         <td><%= link_to 'Show', users_review_path(review) %></td>
       </tr>
     <% end %>

@@ -8,6 +8,9 @@ class Restaurant < ActiveRecord::Base
 
   before_create :tap_configuration
 
+  def rating
+    Review.all.where(:restaurant_id => self.id).average(:rating).to_f
+  end
 
   private
 

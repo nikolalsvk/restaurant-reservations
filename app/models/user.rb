@@ -30,6 +30,21 @@ class User < ActiveRecord::Base
     self.restaurant_id == restaurant.id
   end
 
+  def friends_rating(restaurant_id)
+    ratings = []
+
+    self.friendships.each do |friendship|
+      avg_rating = friendship.friend.reviews.where(:restaurant_id => restaurant_id).average(:rating).to_f
+      ratings << avg_rating unless avg_rating == 0
+    end
+
+    if ratings.count == 0
+      return "Not rated yet"
+    else
+      rating = ratings.sum / ratings.count
+    end
+  end
+
   def friend?(guest)
     !self.friendships.where(:user_id => self.id, :friend_id => guest.id).empty?
   end
