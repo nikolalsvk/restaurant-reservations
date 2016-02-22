@@ -7,21 +7,25 @@ Rails.application.routes.draw do
   resources :managers
 
   resources :guests, :except => [:destroy, :new] do
-    resources :invitations
+    resources :invitations, :except => [:edit, :new, :create]
   end
 
   resources :restaurants do
     resources :configurations, :only => [:create] do
       post :setup_seats
-      resources :seats
+      resources :seats, :only => [:show]
     end
 
-    resources :reservations
+    resources :reservations, :except => [:destroy]
+
+    resources :menus, :except => [:index] do
+      resources :meals, :except => [:index, :new, :edit]
+    end
   end
 
 
   resource :users do
-    resources :friendships, :except => [:edit]
+    resources :friendships, :except => [:edit, :update, :new]
 
     resources :reviews, :only => [:index, :show, :update]
   end

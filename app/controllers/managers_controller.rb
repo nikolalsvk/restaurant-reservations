@@ -31,7 +31,6 @@ class ManagersController < ApplicationController
   end
 
   def update
-    byebug
     respond_to do |format|
       if @manager.update(manager_params)
         format.html { redirect_to @manager, notice: 'Manager was successfully updated.' }
