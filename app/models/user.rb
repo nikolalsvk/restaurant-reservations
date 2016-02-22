@@ -9,6 +9,7 @@ class User < ActiveRecord::Base
 
   has_many :friendships
   has_many :invitations
+  has_many :reviews
 
   before_create :set_role
 

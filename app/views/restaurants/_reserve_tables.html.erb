@@ -6,19 +6,33 @@
     <%= label_tag :date, "Choose a date for your reservation" %>
 
     <div class="form-group">
-      <div class='input-group date' id='datetimepicker1'>
-        <%= text_field_tag :date,
-          params[:date],
-          :class => "form-control" %>
-        <span class="input-group-addon">
-          <span class="glyphicon glyphicon-calendar"></span>
-        </span>
-      </div>
-      <%= label_tag :duration, "How long would you like to stay?" %>
-      <%= select_tag :duration, "<option>1 hour</option>
-                                <option>2 hours</option>
-                                <option>3 hours</option>".html_safe,
-                                :class => "input-group date" %>
+        <% if params[:date] && params[:duration] %>
+          <div class='input-group date'>
+            <%= text_field_tag :date,
+                               params[:date],
+                               :class => "form-control",
+                               :disabled => true %>
+         </div>
+          <%= label_tag :duration, "How long would you like to stay?" %>
+          <%= text_field_tag :duration,
+                             params[:duration],
+                             :class => "form-control",
+                             :disabled => true %>
+        <% else %>
+          <div class='input-group date' id='datetimepicker1'>
+            <%= text_field_tag :date,
+                               params[:date],
+                               :class => "form-control" %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+          <%= label_tag :duration, "How long would you like to stay?" %>
+          <%= select_tag :duration, "<option>1 hour</option>
+                                    <option>2 hours</option>
+                                    <option>3 hours</option>".html_safe,
+                                    :class => "form-control" %>
+       <% end %>
     </div>
     </br>
 

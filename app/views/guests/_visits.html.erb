@@ -1,0 +1,33 @@
+<div class="col-md-4">
+  <div class="panel panel-default">
+    <div class="panel panel-heading">My visits:</div>
+      <div class="panel panel-body">
+        <% if current_user.reviews.empty? %>
+          You haven't visited any restaurants yet!
+        <% else %>
+          <table>
+            <thead>
+              <tr>
+                <th>Restaurant</th>
+                <th>Rating</th>
+                <th>Reservation</th>
+                <th colspan="3"></th>
+              </tr>
+            </thead>
+
+            <tbody>
+              <% current_user.reviews.each do |review| %>
+                <tr>
+                  <td><%= review.restaurant.title %>
+                  <td><%= review.rating ? review.rating : "You haven't rated this restaurant yet" %>
+                  <td><%= reservation_link(review) %>
+                </tr>
+              <% end %>
+            </tbody>
+
+          </table>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

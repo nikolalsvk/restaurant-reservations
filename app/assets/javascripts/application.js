@@ -14,6 +14,7 @@
 //= require jquery.turbolinks
 //= require jquery_ujs
 //= require twitter/bootstrap
+//= require jquery-star-rating
 //= require owl.carousel
 //= require moment
 //= require bootstrap-datetimepicker

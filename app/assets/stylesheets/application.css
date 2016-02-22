@@ -12,6 +12,7 @@
  *
  *= require owl.carousel
  *= require owl.theme
+ *= require jquery-star-rating
  *= require bootstrap_and_overrides
  *= require bootstrap-datetimepicker
  *= require_tree .

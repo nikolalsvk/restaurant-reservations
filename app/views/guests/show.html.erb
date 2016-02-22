@@ -1,60 +1,90 @@
-<p>
-  <strong>First name:</strong>
-  <%= @guest.first_name %>
-</p>
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <p>
+          <strong>First name:</strong>
+          <%= @guest.first_name %>
+        </p>
 
-<p>
-  <strong>Last name:</strong>
-  <%= @guest.last_name %>
-</p>
+        <p>
+          <strong>Last name:</strong>
+          <%= @guest.last_name %>
+        </p>
 
-<p>
-  <strong>Phone number:</strong>
-  <%= @guest.phone_number %>
-</p>
+        <p>
+          <strong>Phone number:</strong>
+          <%= @guest.phone_number %>
+        </p>
 
-<p>
-  <strong>Address:</strong>
-  <%= @guest.address %>
-</p>
+        <p>
+          <strong>Address:</strong>
+          <%= @guest.address %>
+        </p>
 
-<p>
-  <strong>Email:</strong>
-  <%= @guest.email %>
-</p>
+        <p>
+          <strong>Email:</strong>
+          <%= @guest.email %>
+        </p>
 
-<%= link_to "Edit my profile", edit_guest_path(current_user) if @guest.id == current_user.id %>
+      </div>
+      <div class="panel panel-footer">
+        <%= link_to "Edit my profile", edit_guest_path(current_user) if @guest.id == current_user.id %>
+      </div>
+    </div>
+  </div>
 
-<h3>My friends</h3>
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel panel-heading">My friends</div>
 
-<%= render "friendships/friends_table" %>
+      <div class="panel panel-body">
+        <%= render "friendships/friends_table" %>
+      </div>
+    </div>
+  </div>
+</div>
 
-<h3>Search other guests:</h3>
-<%= form_tag(guest_path(current_user), :method => :get) do %>
-  <%= text_field_tag :search, params[:search], :placeholder => "Search other guests" %>
-  <%= submit_tag "Search" %>
-<% end %>
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-default">
+      <div class="panel panel-heading">Search other guests:</div>
+      <div class="panel panel-body">
+        <%= form_tag(guest_path(current_user), :method => :get, :class => "form-inline") do %>
+          <div class="form-group">
+            <%= text_field_tag :search,
+                               params[:search],
+                               :placeholder => "Search other guests",
+                               :class => "form-control" %>
+            <%= submit_tag "Search", :class => "btn btn-info" %>
+          </div>
+        <% end %>
 
-<% if @guest_search %>
-  <% unless @guest_search.empty? %>
-    <p>Results:</p>
-    <table>
-      <% @guest_search.each do |guest| %>
-        <tr>
-          <td><%= guest.first_name %>
-          <td><%= guest.last_name %>
-          <td><%= link_to "Add as friend",
-                          users_friendships_path(:friendship => { :user_id => current_user.id,
-                                                                  :friend_id => guest.id }),
-                          :method => :post,
-                          :remote => true,
-                          :class => "btn btn-primary add-friend" unless current_user.friend?(guest) %>
-        </tr>
-      <% end %>
-    </table>
-  <% else %>
-    <p>Sorry, no one matches your criteria <%= params[:search] %></p>
-  <% end %>
-<% end %>
+        <% if @guest_search %>
+          <% unless @guest_search.empty? %>
+            <p>Results:</p>
+            <table>
+              <% @guest_search.each do |guest| %>
+                <tr>
+                  <td><%= guest.first_name %>
+                  <td><%= guest.last_name %>
+                  <td><%= link_to "Add as friend",
+                                  users_friendships_path(:friendship => { :user_id => current_user.id,
+                                                                          :friend_id => guest.id }),
+                                  :method => :post,
+                                  :remote => true,
+                                  :class => "btn btn-primary add-friend" unless current_user.friend?(guest) %>
+                </tr>
+              <% end %>
+            </table>
+          <% else %>
+            <p>Sorry, no one matches your criteria <%= params[:search] %></p>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
 
-<%= link_to 'Back to all guests', guests_path %>
+  <%= render "visits" %>
+
+</div>
