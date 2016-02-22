@@ -2,6 +2,7 @@
   <div class="panel panel-default">
     <div class="panel panel-heading">My visits:</div>
       <div class="panel panel-body">
+        <% current_user.reservations.each { |res| res.expired? } %>
         <% if current_user.reviews.empty? %>
           You haven't visited any restaurants yet!
         <% else %>
@@ -20,7 +21,7 @@
                 <tr>
                   <td><%= review.restaurant.title %>
                   <td><%= review.rating ? review.rating : "You haven't rated this restaurant yet" %>
-                  <td><%= reservation_link(review) %>
+                  <td><%= link_to "Show visit", users_review_path(review) %>
                 </tr>
               <% end %>
             </tbody>

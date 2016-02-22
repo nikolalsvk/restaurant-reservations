@@ -54,7 +54,11 @@ class RestaurantsController < ApplicationController
 
   private
   def set_restaurant
-    @restaurant = Restaurant.find(params[:id])
+    if current_user.manager?
+      @restaurant = current_user.restaurant
+    else
+      @restaurant = Restaurant.find(params[:id])
+    end
   end
 
   def restaurant_params

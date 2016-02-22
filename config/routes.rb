@@ -19,8 +19,11 @@ Rails.application.routes.draw do
     resources :reservations
   end
 
+
   resource :users do
-    resources :friendships
+    resources :friendships, :except => [:edit]
+
+    resources :reviews, :only => [:index, :show, :update]
   end
 
   # Example of regular route:

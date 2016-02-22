@@ -13,16 +13,16 @@ class Reservation < ActiveRecord::Base
   delegate :title, :to => :restaurant
 
   def expired?
-    date_range = self.date.to_datetime..self.date.to_datetime + self.duration.hours
+    date_range = self.date.localtime..self.date.localtime + self.duration.hours
 
-    unless date_range.cover?(Time.now.to_datetime)
+    unless date_range.cover?(Time.now)
       unless self.review.present?
         self.create_review!(:restaurant_id => self.restaurant.id,
                             :user_id => self.user.id)
       end
     end
 
-    date_range.cover?(Time.now.to_datetime)
+    !date_range.cover?(Time.now)
   end
 
 end

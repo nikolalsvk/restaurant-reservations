@@ -5,10 +5,11 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable,
          :confirmable
 
-  belongs_to :restaurant, -> { where(:role => "manager") }
+  belongs_to :restaurant
 
   has_many :friendships
   has_many :invitations
+  has_many :reservations
   has_many :reviews
 
   before_create :set_role
@@ -30,7 +31,7 @@ class User < ActiveRecord::Base
   end
 
   def friend?(guest)
-    !Friendship.where(:user_id => self.id, :friend_id => guest.id).empty?
+    !self.friendships.where(:user_id => self.id, :friend_id => guest.id).empty?
   end
 
   private

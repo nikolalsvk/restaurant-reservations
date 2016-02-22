@@ -9,7 +9,7 @@ class Seat < ActiveRecord::Base
 
     self.reservations.each do |reservation|
       date_range = reservation.date.localtime..reservation.date.localtime + reservation.duration.hours
-      if date_range.cover?(time)
+      if date_range.cover?(time.to_time)
         return true
       end
     end

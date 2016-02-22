@@ -1,5 +1,4 @@
 <div class="col-md-6" >
-<% if current_user.guest? %>
   <div class="input-group date">
   <%= form_tag(restaurant_path(@restaurant), :method => :get) do %>
 
@@ -38,8 +37,7 @@
 
     <%= submit_tag "Show", :class => "form-control" %></br>
   <% end %>
-  </div></br>
-<% end %>
+</div></br>
 
 <% if params[:date] && params[:duration] %>
   <%= form_tag restaurant_reservations_path(@restaurant) do %>
@@ -58,39 +56,41 @@
             <% end %>
           </tr>
         <% end %>
+      <% end %>
       </tbody>
 
     </table>
     </div>
     <div class="col-md-6">
-    <h4>Invite a friend to a restaurant</h4>
+    <% if current_user.guest? %>
+      <h4>Invite a friend to a restaurant</h4>
 
-    <table>
-      <thead>
-        <tr>
-          <th>First name</th>
-          <th>Last name</th>
-          <th colspan="3"></th>
-        </tr>
-      </thead>
+      <table>
+        <thead>
+          <tr>
+            <th>First name</th>
+            <th>Last name</th>
+            <th colspan="3"></th>
+          </tr>
+        </thead>
 
-      <tbody>
-      <% current_user.friendships.each do |friendship| %>
-        <tr>
-          <td><%= friendship.friend.first_name %>
-          <td><%= friendship.friend.last_name %>
-          <%= hidden_field_tag("friendship_#{friendship.id}[friend_id]", friendship.friend_id) %>
-          <td><%= check_box_tag("friendship_#{friendship.id}[selected]", true, false) %></td>
-        </tr>
-      <% end %>
-    </table>
+        <tbody>
+        <% current_user.friendships.each do |friendship| %>
+          <tr>
+            <td><%= friendship.friend.first_name %>
+            <td><%= friendship.friend.last_name %>
+            <%= hidden_field_tag("friendship_#{friendship.id}[friend_id]", friendship.friend_id) %>
+            <td><%= check_box_tag("friendship_#{friendship.id}[selected]", true, false) %></td>
+          </tr>
+        <% end %>
+      </table>
 
-    <%= hidden_field_tag("reservation[date]", params[:date]) %>
-    <%= hidden_field_tag("reservation[duration]", params[:duration]) %>
+      <%= hidden_field_tag("reservation[date]", params[:date]) %>
+      <%= hidden_field_tag("reservation[duration]", params[:duration]) %>
 
-    <%= submit_tag "Make a reservation", :class => "btn btn-primary" if current_user.guest? %>
+      <%= submit_tag "Make a reservation", :class => "btn btn-primary" %>
+    <% end %>
 
   <% end %>
-<% end %>
 <% end %>
 </div>

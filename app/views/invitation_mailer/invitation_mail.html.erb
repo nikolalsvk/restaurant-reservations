@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Hi there <%= @user.first_name %></h1>
+    <p>
+    Your friend, <b><%= @invitation.reservation.user.first_name %></b> has invited you to
+    <b><%= @invitation.restaurant.title %></b> restaurant.
+
+    When?
+    <b><%= @invitation.date %></b>
+    for
+    <b><%= @invitation.duration %> hours</b>
+    Who else is coming?
+    <% @invitation.reservation.invitations.each do |invite| %>
+      <% unless invite.user.id == @user.id %>
+        <b><%= invite.first_name %> <%= invite.last_name %> </b>
+      <% end %>
+    <% end %>
+    </p>
+    <%
+        def protect_against_forgery?
+          false
+        end
+    %>
+    <% unless @invitation.confirmed %>
+      <div class="row">
+      <%= button_to "Accept", guest_invitation_url(@user,
+                                                   @invitation,
+                                                   :invitation => { :confirmed => true }),
+                              :method => :put,
+                              :class => "btn btn-primary" %>
+      <%= button_to "Decline", guest_invitation_url(@user,
+                                                    @invitation),
+                               :method => :delete,
+                               :class => "btn btn-danger" %>
+     </div>
+    <% end %>
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>

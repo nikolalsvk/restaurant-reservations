@@ -6,7 +6,7 @@ class ReservationsController < ApplicationController
   # GET /reservations
   # GET /reservations.json
   def index
-    @reservations = Reservation.all
+    @reservations = current_user.reservations.all
   end
 
   # GET /reservations/1
@@ -43,6 +43,11 @@ class ReservationsController < ApplicationController
                             :y => seat[:y]).first
 
           seat.with_lock do
+            if seat.reserved?(reservation_params[:date])
+              redirect_to @restaurant,
+                :alert => "Some seats have been reserved meanwhile. We are sorry for the inconvenience" and return
+            end
+
             seat.reservations << @reservation
 
             unless seat.save
@@ -55,10 +60,12 @@ class ReservationsController < ApplicationController
         @friends_info.each do |friend|
           friend = Guest.where(:id => friend[:friend_id]).first
 
-          friend.invitations.create!(:user_id => current_user.id,
-                                     :reservation_id => @reservation.id,
-                                     :confirmed => false)
+          invitation = friend.invitations.create!(:user_id => current_user.id,
+                                                  :reservation_id => @reservation.id,
+                                                  :confirmed => false)
+          InvitationMailer.invitation_mail(friend, invitation).deliver_now
         end
+
 
         redirect_to @restaurant, notice: 'Reservation was successfully created.' and return
       end

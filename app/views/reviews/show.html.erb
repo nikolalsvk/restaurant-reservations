@@ -1,0 +1,63 @@
+<div class="panel panel-default">
+  <div class="panel panel-heading">
+    You have visited <b><%= @review.restaurant.title %></b> restaurant
+  </div>
+
+  <div class="panel panel-body">
+    on
+    <strong><%= @review.reservation.date %></strong>
+    for
+    <strong><%= @review.reservation.duration%> hours</strong>
+    <p>
+    <p>You have been there with <%= "no one" if @review.reservation.invitations.empty? %></p>
+
+    <% @review.reservation.invitations.each do |invite| %>
+      <% if current_user.id == invite.user_id %>
+
+        <p><b><%= invite.reservation.user.first_name %> <%= invite.reservation.user.last_name %> </b> - they invited you</p>
+
+      <% else %>
+
+        <p><b><%= invite.first_name %> <%= invite.last_name %> </b><%= check_box_tag(:confirmed, invite.confirmed, invite.confirmed, :disabled => true) %></p>
+
+      <% end %>
+    <% end %>
+
+    <div id="row">
+      <% if @review.rating %>
+        <p>You have rated this visit with number below</p>
+        <%= hidden_field_tag :rating, @review.rating %>
+        <%= text_field_tag :rating, @review.rating, :class => "form-control",
+                           :disabled => true %>
+      <% else %>
+        <%= form_tag(users_review_path(@review),
+                     :method => :put,
+                     :class => "form-inline") do %>
+          <div class="panel panel-default">
+            <div class="panel panel-heading">Please review this visit</div>
+            <div class="panel panel-body">
+            <%= select_tag :rating, "<option>1</option>
+                                     <option>2</option>
+                                     <option>3</option>
+                                     <option>4</option>
+                                     <option>5</option>".html_safe,
+                                     :class => "form-control" %>
+            </div>
+            <div class="panel panel-footer">
+              <%= button_tag "Rate it",
+                             :class => "btn btn-success",
+                             :type => "submit" %>
+
+            </div>
+          </div>
+        <% end %>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="panel panel-footer">
+    <div>
+      <%= link_to 'Back', users_reviews_path, :class => "btn btn-info" %>
+    </div>
+  </div>
+</div>

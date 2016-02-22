@@ -1,0 +1,4 @@
+module InvitationMailerHelper
+
+
+end

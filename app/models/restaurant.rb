@@ -1,6 +1,6 @@
 class Restaurant < ActiveRecord::Base
 
-  has_many :managers
+  has_many :managers, -> { where(:role => "manager") }
   has_one :seats_configuration
   has_many :reviews
 

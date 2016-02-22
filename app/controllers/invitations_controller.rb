@@ -1,5 +1,6 @@
 class InvitationsController < ApplicationController
   before_action :set_invitation, only: [:show, :edit, :update, :destroy]
+  skip_before_filter :verify_authenticity_token, :only => [:update]
 
   # GET /invitations
   # GET /invitations.json
@@ -64,7 +65,13 @@ class InvitationsController < ApplicationController
   private
     # Use callbacks to share common setup or constraints between actions.
     def set_invitation
-      @invitation = Invitation.find(params[:id])
+      if current_user.id == params[:guest_id]
+        @invitation = current_user.invitations.find(params[:id])
+      else
+        user = Guest.find(params[:guest_id])
+        @invitation = user.invitations.find(params[:id])
+      end
+
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.

@@ -12,7 +12,6 @@
  *
  *= require owl.carousel
  *= require owl.theme
- *= require jquery-star-rating
  *= require bootstrap_and_overrides
  *= require bootstrap-datetimepicker
  *= require_tree .
@@ -41,7 +40,7 @@ body {
 /* Set the fixed height of the footer here */
 #footer {
   height: 4em;
-  background-color: #2E7D32;
+  background-color: #CFD8DC;
 }
 
 .footer, .push {
@@ -51,4 +50,8 @@ body {
 .configuration-check-box {
   width: 30px;
   height: 30px;
+}
+
+.panel-footer, .panel-body, .panel-heading {
+  margin-bottom: 0px;
 }
