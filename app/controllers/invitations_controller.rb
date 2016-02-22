@@ -1,7 +1,9 @@
 class InvitationsController < ApplicationController
   before_action :set_invitation, only: [:show, :edit, :update, :destroy]
-  skip_before_filter :verify_authenticity_token, :only => [:update]
-  before_filter :authenticate_user!, :except => [:update]
+  skip_before_filter :verify_authenticity_token, :only => [:update, :destroy]
+  before_filter :authenticate_user!, :except => [:update, :destroy]
+
+  rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
     @invitations = Invitation.all
@@ -49,4 +51,9 @@ class InvitationsController < ApplicationController
   def invitation_params
     params.require(:invitation).permit(:user_id, :confirmed)
   end
+
+  def record_not_found
+    render text: "404 Not Found", status: 404
+  end
+
 end
