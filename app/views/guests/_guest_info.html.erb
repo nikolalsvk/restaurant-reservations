@@ -1,6 +1,10 @@
 <div class="col-md-4">
   <div class="panel panel-success">
     <div class="panel-body">
+      <div class="text-center profile-img">
+        <%= image_tag gravatar_url(@guest.email, 256) %>
+      </div>
+
       <p>
         <strong>First name:</strong>
         <%= @guest.first_name %>

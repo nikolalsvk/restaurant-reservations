@@ -1,4 +1,4 @@
-<div class="col-md-4">
+<div class="col-md-6">
   <div class="panel panel-default">
     <div class="panel panel-heading">Search other guests:</div>
     <div class="panel panel-body">
@@ -15,21 +15,32 @@
       <% if @guest_search %>
         <% unless @guest_search.empty? %>
           <p>Results:</p>
-          <table>
-            <% @guest_search.each do |guest| %>
-              <% unless current_user.id == guest.id %>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
                 <tr>
-                  <td><%= guest.first_name %>
-                  <td><%= guest.last_name %>
-                  <td><%= link_to "Add as friend",
-                                  users_friendships_path(:friendship => { :user_id => current_user.id,
-                                                                          :friend_id => guest.id }),
-                                  :method => :post,
-                                  :class => "btn btn-primary add-friend" unless current_user.friend?(guest) %>
+                  <th>First_name</th>
+                  <th>Last name</th>
+                  <th>Email</th>
+                  <th colspan="3"></th>
                 </tr>
+              </thead>
+              <% @guest_search.each do |guest| %>
+                <% unless current_user.id == guest.id %>
+                  <tr>
+                    <td><%= guest.first_name %>
+                    <td><%= guest.last_name %>
+                    <td><%= guest.email %>
+                    <td><%= link_to "Add as friend",
+                                    users_friendships_path(:friendship => { :user_id => current_user.id,
+                                                                            :friend_id => guest.id }),
+                                    :method => :post,
+                                    :class => "btn btn-primary add-friend" unless current_user.friend?(guest) %>
+                  </tr>
+                <% end %>
               <% end %>
-            <% end %>
-          </table>
+            </table>
+          </div>
         <% else %>
           <p>Sorry, no one matches your criteria <%= params[:search] %></p>
         <% end %>

@@ -1,4 +1,4 @@
-<%= form_for(@meal) do |f| %>
+<%= form_for([@restaurant, @menu, @meal]) do |f| %>
   <% if @meal.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@meal.errors.count, "error") %> prohibited this meal from being saved:</h2>
@@ -24,8 +24,7 @@
     <%= f.text_field :price %>
   </div>
   <div class="field">
-    <%= f.label :menu_id %><br>
-    <%= f.text_field :menu_id %>
+    <%= f.hidden_field :menu_id, :value => @menu.id %>
   </div>
   <div class="actions">
     <%= f.submit %>

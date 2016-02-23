@@ -14,11 +14,20 @@
   <div class="col-md-12">
     <%= render "reserve_tables" %>
   </div>
+
 <% else %>
+
   <%= render "configuration_set_up" %>
+
 <% end %>
 
 <div class="col-md-12"><br></div>
+
+<div class="col-md-12">
+
+  <%= render "menu" %>
+
+</div>
 
 <div class="col-md-12">
 
@@ -27,9 +36,10 @@
   <div class="text-center">
   <% if current_user.restaurant_manager(@restaurant) %>
     <%= link_to 'Edit', edit_restaurant_path(@restaurant), :class => "btn btn-primary" %> |
-    <%= link_to 'Menu', restaurant_menus_path(@restaurant), :method => :get, :class => "btn btn-success" %> |
+    <%= link_to 'Edit menu', edit_restaurant_menu_path(@restaurant, @restaurant.menu), :class => "btn btn-primary" %> |
   <% end %>
   <%= link_to 'Back', restaurants_path, :class => "btn btn-info" %><br>
   </div>
 </div>
 
+<div class="col-md-12"><br></div>

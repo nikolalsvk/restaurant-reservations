@@ -1,5 +1,3 @@
-<p id="notice"><%= notice %></p>
-
 <p>
   <strong>Title:</strong>
   <%= @menu.title %>
@@ -10,10 +8,11 @@
   <%= @menu.description %>
 </p>
 
+<%= link_to "Add meals", new_restaurant_menu_meal_path(@restaurant, @menu),
+                         :class => "btn btn-success" %>
 <p>
-  <strong>Restaurant:</strong>
-  <%= @menu.restaurant %>
-</p>
 
-<%= link_to 'Edit', edit_menu_path(@menu) %> |
-<%= link_to 'Back', menus_path %>
+<%= render "restaurants/menu" %>
+
+<%= link_to 'Edit menu', edit_restaurant_menu_path(@restaurant, @restaurant.menu), :class => "btn btn-primary" %>
+<%= link_to 'Back to restaurant', @restaurant %> |

@@ -12,8 +12,8 @@
               <thead>
                 <tr>
                   <th>Restaurant</th>
+                  <th>Date</th>
                   <th>Rating</th>
-                  <th>Reservation</th>
                   <th>Friends</th>
                   <th colspan="3"></th>
                 </tr>
@@ -23,6 +23,7 @@
                 <% current_user.reviews.each do |review| %>
                   <tr>
                     <td><%= review.restaurant.title %>
+                    <td><%= review.reservation.date %>
                     <td><%= review.rating ? review.rating : "You haven't rated this restaurant yet" %>
                     <td>
                       <% if review.reservation.invitations.empty? %>

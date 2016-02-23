@@ -8,6 +8,7 @@ class Restaurant < ActiveRecord::Base
   validates_presence_of :title
 
   before_create :tap_configuration
+  before_create :tap_menu
 
   def rating
     Review.all.where(:restaurant_id => self.id).average(:rating).to_f
@@ -17,6 +18,10 @@ class Restaurant < ActiveRecord::Base
 
   def tap_configuration
     self.build_seats_configuration
+  end
+
+  def tap_menu
+    self.build_menu
   end
 
 end

@@ -19,7 +19,7 @@ Rails.application.routes.draw do
     resources :reservations, :except => [:destroy]
 
     resources :menus, :except => [:index] do
-      resources :meals, :except => [:index, :new, :edit]
+      resources :meals, :except => [:index]
     end
   end
 

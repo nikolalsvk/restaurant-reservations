@@ -1,0 +1,42 @@
+<div class="panel panel-info">
+  <div class="panel panel-heading"><%= @restaurant.menu.title ? @restaurant.menu.title : "Menu" %></div>
+  <div class="panel panel-body">
+    <% if @restaurant.menu.meals.empty? %>
+      There is nothing on the menu.
+    <% else %>
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @restaurant.menu.meals.each do |meal| %>
+              <tr>
+                <td><%= meal.title %></td>
+                <td><%= meal.description %></td>
+                <td><%= meal.price %></td>
+                <td><%= link_to 'Show', restaurant_menu_meal_path(@restaurant, @restaurant.menu, meal) %></td>
+                <% if current_user.restaurant_manager(@restaurant) %>
+                  <td><%= link_to 'Edit', edit_restaurant_menu_meal_path(@restaurant, @restaurant.menu, meal) %></td>
+                  <td><%= link_to 'Destroy', restaurant_menu_meal_path(@restaurant, @restaurant.menu, meal), method: :delete, data: { confirm: 'Are you sure?' } %></td>
+                <% end %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    <% end %>
+  </div>
+  <% if current_user.restaurant_manager(@restaurant) %>
+    <div class="panel panel-footer text-center">
+      <%= link_to "Add meals", new_restaurant_menu_meal_path(@restaurant, @restaurant.menu),
+                  :class => "btn btn-success" %>
+    </div>
+  <% end %>
+</div>
