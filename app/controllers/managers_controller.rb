@@ -58,7 +58,7 @@ class ManagersController < ApplicationController
   def manager_params
     params[:manager].permit(:email, :first_name, :last_name,
                             :phone_number, :address, :password,
-                            :password_confirmation, :confirmed_at,
+                            :password_confirmation, :confirmed_at, :lat, :lng,
                             :restaurant_id)
   end
 end

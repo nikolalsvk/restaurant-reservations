@@ -1,21 +1,32 @@
-  <h1>Welcome to Restaurant Reservations</h1>
+  <div class="jumbotron">
+    <h1><strong>Welcome to Restaurant Reservations</strong></h1>
+  </div>
 
   <% unless current_user %>
-      <div class="row text-center">
-        <div class="col-xs-6 previous">
-          <%= button_to "Login", new_user_session_path,
-                        :class => "btn btn-primary btn-lg text-left" %>
+    <div class="col-md-12 text-center">
+      <%= form_for(:user, :url => session_path(:user), :class => "form-inline", html: { role: "form" }) do |f| %>
+        <div class="form-group">
+          <%= f.email_field :email, autofocus: true, class: "form-control" %>
         </div>
-      <div class="col-xs-6 next">
-        <%= button_to "Sign up", new_user_registration_path,
-                      :method => :get,
-                      :class => "btn btn-primary btn-lg text-right" %>
-      </div>
+        <div class="form-group">
+          <%= f.password_field :password, autocomplete: "off", class: "form-control" %>
+        </div>
+        <div class="checkbox">
+          <label>
+            <%= f.check_box :remember_me %>
+            <%= f.label :remember_me %>
+          </label>
+        </div>
+        <%= f.submit 'Sign in', :class => "btn btn-primary" %>
+        <%= link_to "Forgot your password?", new_password_path(:user) %>
+      <% end %>
     </div>
   <% end %>
 
-  <% if current_user %>
-    <%= render "invitations" %>
+  <% if current_user && current_user.guest? %>
+    <div class="col-md-12">
+      <%= render "invitations" %>
+    </div>
   <% end %>
 
   </br>

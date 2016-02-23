@@ -1,4 +1,4 @@
-<div id="footer">
+ <%= nav_bar :fixed => :bottom, :responsive => :true, :id => "footer" do %>
   <p class="navbar-text pull-left">Made by nikolalsvk
   </p>
   <p class="navbar-text pull-right">
@@ -6,15 +6,15 @@
     Logged in as <strong><%= current_user.email %></strong>.
     <%= link_to 'Edit password', edit_user_registration_path, :class => 'navbar-link' %> |
     <% if current_user.guest? %>
-      <%= link_to 'Edit profile', edit_guest_path(current_user), :class => 'navbar-link' if current_user.guest? %> |
+      <%= link_to 'Edit profile', edit_guest_path(User.find(current_user.id)), :class => 'navbar-link' if current_user.guest? %> |
     <% end %>
     <% if current_user.manager? %>
-      <%= link_to 'Edit profile', edit_manager_path(current_user), :class => 'navbar-link' if current_user.manager? %> |
+      <%= link_to 'Edit profile', edit_manager_path(Manager.find(current_user.id)), :class => 'navbar-link' if current_user.manager? %> |
     <% end %>
     <%= link_to "Logout", destroy_user_session_path, :method => :delete, :class => 'navbar-link' %>
   <% else %>
     <%= link_to "Sign up", new_user_registration_path, :class => 'navbar-link'  %> |
-    <%= link_to "Login", new_user_session_path, :class => 'navbar-link' %>
+    <%= link_to "Sign in", new_user_session_path, :class => 'navbar-link' %>
   <% end %>
   </p>
-</div>
+<% end %>

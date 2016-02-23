@@ -19,6 +19,14 @@
     <%= f.label :description %><br>
     <%= f.text_area :description %>
   </div>
+  <div class="field">
+    <%= f.label :lat, "Address Latitude" %><br>
+    <%= f.text_field :lat %>
+  </div>
+  <div class="field">
+    <%= f.label :lng, "Address Longitude" %><br>
+    <%= f.text_field :lng %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

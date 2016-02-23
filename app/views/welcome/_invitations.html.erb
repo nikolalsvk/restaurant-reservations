@@ -20,8 +20,14 @@
                 <b><%= invitation.duration %> <%= invitation.duration == 1 ? "hour" : "hours" %>.</b>
                 Who else is coming?
                 <% invitation.reservation.invitations.each do |invite| %>
-                  <% unless invite.user.id == current_user.id %>
-                    <b><%= invite.first_name %> <%= invite.last_name %> </b>
+                  <% if current_user.id == invite.user_id %>
+
+                    <b><%= invite.reservation.user.first_name %> <%= invite.reservation.user.last_name %> </b> - they invited you
+
+                  <% else %>
+
+                    <b><%= invite.first_name %> <%= invite.last_name %></b>
+
                   <% end %>
                 <% end %>
               </p>

@@ -18,6 +18,8 @@ admin.save!
 
 p "Creating restaurants and seats configurations"
 res_eat_good = Restaurant.create!(:title => "Eat good",
+                                  :lat => rand(45.244..45.269),
+                                  :lng => rand(19.8233..19.83467),
                                   :description => "Vegan")
 configuration_1 = SeatsConfiguration.new(:restaurant_id => res_eat_good.id)
 
@@ -27,6 +29,8 @@ end
 configuration_1.save!
 
 every_nice = Restaurant.create!(:title => "Everything is nice here",
+                                :lat => rand(45.244..45.269),
+                                :lng => rand(19.8233..19.83467),
                                 :description => "Meat")
 configuration_1 = SeatsConfiguration.new(:restaurant_id => every_nice.id)
 
@@ -36,6 +40,8 @@ end
 configuration_1.save!
 
 all_u_can_eat = Restaurant.create!(:title => "All you can eat",
+                                   :lat => rand(45.244..45.269),
+                                   :lng => rand(19.8233..19.83467),
                                    :description => "Vegetables")
 configuration_1 = SeatsConfiguration.new(:restaurant_id => all_u_can_eat.id)
 
@@ -70,6 +76,8 @@ last_names = [ "Jovanov", "Ras", "Pas", "Gars", "Leri", "Oldman", "Stasanov" ]
                         :password => "managermanager",
                         :password_confirmation => "managermanager",
                         :restaurant => res_eat_good,
+                        :lat => rand(45.244..45.269),
+                        :lng => rand(19.8233..19.83467),
                         :confirmed_at => DateTime.now)
   manager.skip_confirmation!
   manager.save!
@@ -90,6 +98,8 @@ valid_email.count.times do |number|
                     :phone_number => "3435#{rand(100)}1#{rand(200)}",
                     :password => "guestguest",
                     :password_confirmation => "guestguest",
+                    :lat => rand(45.244..45.269),
+                    :lng => rand(19.8233..19.83467),
                     :confirmed_at => DateTime.now)
   guest.skip_confirmation!
   guest.save!

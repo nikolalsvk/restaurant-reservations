@@ -4,6 +4,9 @@ class RestaurantsController < ApplicationController
   def index
     if params[:sort]
       @restaurants = Restaurant.all.order(params[:sort])
+    elsif params[:distance]
+      @restaurants = Restaurant.all
+      @restaurants.sort_by { |r| r.distance_to(current_user) }
     else
       @restaurants = Restaurant.all
     end
@@ -66,6 +69,6 @@ class RestaurantsController < ApplicationController
   end
 
   def restaurant_params
-    params.require(:restaurant).permit(:title, :description)
+    params.require(:restaurant).permit(:title, :description, :lat, :lng)
   end
 end

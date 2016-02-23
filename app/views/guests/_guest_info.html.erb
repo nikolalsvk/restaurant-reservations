@@ -22,14 +22,21 @@
         <%= @guest.phone_number %>
       </p>
 
+      <% if @guest.lat %>
       <p>
         <strong>Address:</strong>
-        <%= @guest.address %>
+        <%= reverse_geocode(@guest) %>
       </p>
+      <% end %>
 
       <p>
         <strong>Email:</strong>
         <%= @guest.email %>
+      </p>
+
+      <p>
+        <strong>Visits:</strong>
+        <%= @guest.reviews.count %>
       </p>
 
     </div>

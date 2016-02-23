@@ -6,6 +6,9 @@
 <%= link_to "Sort by description",
             restaurants_path(:sort => "description"),
             :class => "btn btn-info" %>
+<%= link_to "Sort by distance",
+            restaurants_path(:distance => "distance"),
+            :class => "btn btn-info" %>
 <%= link_to "Unsort",
             restaurants_path,
             :class => "btn btn-info" %>
@@ -15,6 +18,7 @@
       <tr>
         <th>Title</th>
         <th>Description</th>
+        <th>Distance (m)</th>
         <th>Rating</th>
         <% if current_user.guest? %>
           <th>Friends rating</th>
@@ -28,6 +32,7 @@
         <tr>
           <td><%= restaurant.title %></td>
           <td><%= restaurant.description %></td>
+          <td><%= restaurant.distance_from(current_user, :units => :meters).round(2) %></td>
           <td><%= restaurant.rating == 0 ? "Not rated yet" : restaurant.rating.round(2) %>
           <% if current_user.guest? %>
             <td><%= current_user.friends_rating(restaurant.id) %>
@@ -35,7 +40,6 @@
           <td><%= link_to 'Reservation', restaurant %></td>
           <td><%= link_to 'Your reservations', restaurant_reservations_path(restaurant) if current_user.guest? %>
           <td><%= link_to 'Edit', edit_restaurant_path(restaurant) if current_user.restaurant_manager(restaurant) %></td>
-          <td><%= link_to 'Destroy', restaurant, method: :delete, data: { confirm: 'Are you sure?' }  if current_user.admin? %></td>
         </tr>
       <% end %>
     </tbody>

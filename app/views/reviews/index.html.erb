@@ -10,7 +10,8 @@
         <th>Restaurant</th>
         <th>Date</th>
         <th>Duration (hours)</th>
-        <th>Rating</th>
+        <th>Your Rating</th>
+        <th>Friends</th>
         <th colspan="3"></th>
       </tr>
     </thead>
@@ -22,6 +23,23 @@
           <td><%= l review.reservation.date, :format => :date_with_time %>
           <td><%= review.reservation.duration %>
           <td><%= review.rating ? review.rating : "Not yet rated" %>
+          <td>
+            <% if review.reservation.invitations.empty? %>
+              You went alone
+            <% else %>
+              <% review.reservation.invitations.each do |invite| %>
+                <% if current_user.id == invite.user_id %>
+
+                  <b><%= invite.reservation.user.first_name %> <%= invite.reservation.user.last_name %> </b> - they invited you
+
+                <% else %>
+
+                  <%= invite.first_name %> <%= invite.last_name %>
+
+                <% end %>
+              <% end %>
+            <% end %>
+          </td>
           <td><%= link_to 'Show', users_review_path(review) %></td>
         </tr>
       <% end %>

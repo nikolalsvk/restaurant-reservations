@@ -1,12 +1,9 @@
-<p>
-  <strong>Title:</strong>
-  <%= @restaurant.title %>
-</p>
-
-<p>
-  <strong>Description:</strong>
-  <%= @restaurant.description %>
-</p>
+<div class="jumbotron restaurant">
+  <h1><strong><%= @restaurant.title %></strong></h1>
+  <p>
+    <%= @restaurant.description %>
+  </p>
+</div>
 
 <% if @seats.present? %>
   <%= render "choose_date" %>
@@ -29,6 +26,20 @@
 
 </div>
 
+<div class="col-md-12 text-center">
+  <div class="panel panel-default">
+    <div class="panel panel-body">
+
+      <div style='width: 800px;' class="text-center">
+        <div id="map" style='width: 800px; height: 400px;'></div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<div class="col-md-12"><br></div>
+
 <div class="col-md-12">
 
   <%= render "managers" %>
@@ -43,3 +54,30 @@
 </div>
 
 <div class="col-md-12"><br></div>
+
+<script>
+  var directionsDisplay = new google.maps.DirectionsRenderer();
+  var directionsService = new google.maps.DirectionsService();
+
+  function calcRoute() {
+    var origin      = new google.maps.LatLng(<%= current_user.lat %>, <%= current_user.lng %>);
+    var destination = new google.maps.LatLng(<%= @restaurant.lat %>,<%= @restaurant.lng %>);
+    var request = {
+        origin:      origin,
+        destination: destination,
+        travelMode:  google.maps.TravelMode.DRIVING
+    };
+    directionsService.route(request, function(response, status) {
+      if (status == google.maps.DirectionsStatus.OK) {
+        directionsDisplay.setDirections(response);
+      }
+    });
+  }
+
+  calcRoute();
+
+  var handler = Gmaps.build('Google');
+  handler.buildMap({ internal: {id: 'map'}}, function(){
+    directionsDisplay.setMap(handler.getMap());
+  });
+</script>

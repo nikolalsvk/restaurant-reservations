@@ -4,6 +4,8 @@
   <title>RestaurantReservation</title>
   <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
   <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <script src="//maps.google.com/maps/api/js?v=3.18&sensor=false&client=&key=&libraries=geometry&language=&hl=&region="></script>
+  <script src="//google-maps-utility-library-v3.googlecode.com/svn/tags/markerclustererplus/2.0.14/src/markerclusterer_packed.js"></script>
   <%= csrf_meta_tags %>
 </head>
 <body>
@@ -21,7 +23,12 @@
     <% end %>
 
     <%= yield %>
+
+    <div class="col-md-12 text-center"><br></div>
+    <div class="col-md-12 text-center"><br></div>
+    <div class="col-md-12 text-center"><br></div>
   </div>
+
 
   <div class="push"></div>
 </div>

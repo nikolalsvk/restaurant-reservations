@@ -7,6 +7,8 @@ class DeviseCreateUsers < ActiveRecord::Migration
       t.string :full_name
       t.string :phone_number
       t.string :address
+      t.float :lat
+      t.float :lng
       t.integer :restaurant_id
 
       ## User role e.g. admin, guest, manager
