@@ -2,7 +2,11 @@ class RestaurantsController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
 
   def index
-    @restaurants = Restaurant.all
+    if params[:sort]
+      @restaurants = Restaurant.all.order(params[:sort])
+    else
+      @restaurants = Restaurant.all
+    end
   end
 
   def show

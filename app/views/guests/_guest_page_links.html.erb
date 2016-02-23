@@ -1,0 +1,9 @@
+<%= link_to "Sort by first name",
+            guest_path(current_user, :sort => "first_name"),
+            :class => "btn btn-info" %>
+<%= link_to "Sort by last name",
+            guest_path(current_user, :sort => "last_name"),
+            :class => "btn btn-info" %>
+<%= link_to "Unsort",
+            guest_path(current_user),
+            :class => "btn btn-info" %>

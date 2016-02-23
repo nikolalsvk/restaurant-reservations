@@ -25,7 +25,6 @@
                                   users_friendships_path(:friendship => { :user_id => current_user.id,
                                                                           :friend_id => guest.id }),
                                   :method => :post,
-                                  :remote => true,
                                   :class => "btn btn-primary add-friend" unless current_user.friend?(guest) %>
                 </tr>
               <% end %>

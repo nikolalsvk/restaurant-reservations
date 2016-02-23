@@ -1,6 +1,6 @@
 <% unless current_user.invitations.empty? %>
   <div class="row"><div class="col-md-6"><h4>Invitations</h4></div></div>
-  <% current_user.invitations.each do |invitation| %>
+  <% @invitations.each do |invitation| %>
 
     <% invitation.reservation.expired? %>
     <% unless invitation.expired? %>
@@ -9,13 +9,13 @@
         <div class="panel panel-success">
           <div class="panel panel-body">
             <p>
-              Your friend, <b><%= invitation.first_name %></b> has invited you to
+              Your friend, <b><%= invitation.reservation.user.first_name %></b> has invited you to
               <b><%= invitation.restaurant.title %></b> restaurant.
 
               When?
               <b><%= invitation.date %></b>
               for
-              <b><%= invitation.duration %> hours</b>
+              <b><%= invitation.duration %> <%= invitation.duration == 1 ? "hour" : "hours" %>.</b>
               Who else is coming?
               <% invitation.reservation.invitations.each do |invite| %>
                 <% unless invite.user.id == current_user.id %>
@@ -25,19 +25,19 @@
             </p>
 
             <% unless invitation.confirmed %>
-              <div class="row">
-                <%= button_to "Accept", guest_invitation_path(current_user,
-                                                              invitation,
-                                                              :invitation => { :confirmed => true }),
-                                                              :method => :put,
-                                                              :class => "btn btn-primary" %>
-                <%= button_to "Decline", guest_invitation_path(current_user,
-                                                              invitation),
-                                                              :method => :delete,
-                                                              :class => "btn btn-danger" %>
+              <div class="text-center">
+                <%= link_to "Accept", guest_invitation_path(current_user,
+                                                            invitation,
+                                                            :invitation => { :confirmed => true }),
+                                                            :method => :put,
+                                                            :class => "btn btn-primary" %>
+                <%= link_to "Decline", guest_invitation_path(current_user,
+                                                             invitation),
+                                                             :method => :delete,
+                                                             :class => "btn btn-danger" %>
               </div>
             <% else %>
-                You have accepted this invitation
+                You have accepted this invitation.
             <% end %>
           </div>
         </div>

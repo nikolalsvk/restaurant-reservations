@@ -7,7 +7,11 @@ class GuestsController < ApplicationController
   end
 
   def show
-    @friendships = current_user.friendships
+    if params[:sort]
+      @friends = User.joins(:friendships).where("friendships.friend_id" => current_user.id).order(params[:sort])
+    else
+      @friends = User.joins(:friendships).where("friendships.friend_id" => current_user.id)
+    end
   end
 
   def edit

@@ -1,5 +1,5 @@
 <div class="col-md-4">
-  <div class="panel panel-default">
+  <div class="panel panel-success">
     <div class="panel-body">
       <p>
         <strong>First name:</strong>
@@ -27,8 +27,10 @@
       </p>
 
     </div>
-    <div class="panel panel-footer">
-      <%= link_to "Edit my profile", edit_guest_path(current_user) if @guest.id == current_user.id %>
+    <div class="panel panel-footer text-center">
+      <%= link_to "Edit my profile",
+                  edit_guest_path(current_user),
+                  :class => "btn btn-primary" if @guest.id == current_user.id %>
     </div>
   </div>
 </div>

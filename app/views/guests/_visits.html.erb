@@ -1,5 +1,5 @@
 <div class="col-md-8">
-  <div class="panel panel-default">
+  <div class="panel panel-danger">
     <div class="panel panel-heading">My visits:</div>
       <div class="panel panel-body">
         <% current_user.reservations.each { |res| res.expired? } %>
@@ -7,41 +7,43 @@
         <% if current_user.reviews.empty? %>
           You haven't visited any restaurants yet!
         <% else %>
-          <table>
-            <thead>
-              <tr>
-                <th>Restaurant</th>
-                <th>Rating</th>
-                <th>Reservation</th>
-                <th>Friends</th>
-                <th colspan="3"></th>
-              </tr>
-            </thead>
-
-            <tbody>
-              <% current_user.reviews.each do |review| %>
+          <div class="table-responsive">
+            <table class="table">
+              <thead>
                 <tr>
-                  <td><%= review.restaurant.title %>
-                  <td><%= review.rating ? review.rating : "You haven't rated this restaurant yet" %>
-                  <td>
-                    <% if review.reservation.invitations.empty? %>
-                      You went alone
-                    <% else %>
-                      <% review.reservation.invitations.each do |invitation, index| %>
-                        <% if invitation == review.reservation.invitations.last %>
-                          <%= invitation.user.first_name %>
-                        <% else %>
-                          <%= invitation.user.first_name %>,
+                  <th>Restaurant</th>
+                  <th>Rating</th>
+                  <th>Reservation</th>
+                  <th>Friends</th>
+                  <th colspan="3"></th>
+                </tr>
+              </thead>
+
+              <tbody>
+                <% current_user.reviews.each do |review| %>
+                  <tr>
+                    <td><%= review.restaurant.title %>
+                    <td><%= review.rating ? review.rating : "You haven't rated this restaurant yet" %>
+                    <td>
+                      <% if review.reservation.invitations.empty? %>
+                        You went alone
+                      <% else %>
+                        <% review.reservation.invitations.each do |invitation| %>
+                          <% if invitation == review.reservation.invitations.last %>
+                            <%= invitation.user.first_name %>
+                          <% else %>
+                            <%= invitation.user.first_name %>,
+                          <% end %>
                         <% end %>
                       <% end %>
-                    <% end %>
-                  </td>
-                  <td><%= link_to "Show visit", users_review_path(review) %>
-                </tr>
-              <% end %>
-            </tbody>
+                    </td>
+                    <td><%= link_to "Show visit", users_review_path(review) %>
+                  </tr>
+                <% end %>
+              </tbody>
 
-          </table>
+            </table>
+          </div>
         <% end %>
       </div>
     </div>

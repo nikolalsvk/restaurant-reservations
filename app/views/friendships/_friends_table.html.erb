@@ -1,12 +1,13 @@
-<div class="col-md-8">
-  <div class="panel panel-default">
-    <div class="panel panel-heading">My friends</div>
-    <div class="panel panel-body">
-      <% if @friendships.empty? %>
-        <h2>Seems like you don't have friends on your profile</h2>
-        <p>How about adding some?</p>
-      <% else %>
-        <table>
+<div class="panel panel-info">
+  <div class="panel panel-heading">My friends</div>
+  <div class="panel panel-body">
+    <% if @friends.empty? %>
+      <h2>Seems like you don't have friends on your profile</h2>
+      <p>How about adding some?</p>
+    <% else %>
+      <%= render links_partial %>
+      <div class="table-responsive">
+        <table class="table">
           <thead>
             <tr>
               <th>First name</th>
@@ -20,16 +21,16 @@
           </thead>
 
           <tbody>
-            <% @friendships.each do |friendship| %>
+            <% @friends.each do |friend| %>
               <tr>
-                <td><%= friendship.friend.first_name %>
-                <td><%= friendship.friend.last_name %>
-                <td><%= friendship.friend.phone_number %>
-                <td><%= friendship.friend.address %>
-                <td><%= friendship.friend.email %>
-                <td><%= link_to 'Show', users_friendship_path(friendship),
-                                        :class => "btn btn-info" %></td>
-                <td><%= link_to 'Remove from friends',
+                <% friendship = current_user.friendship(friend) %>
+                <td><%= friend.first_name %>
+                <td><%= friend.last_name %>
+                <td><%= friend.phone_number %>
+                <td><%= friend.address %>
+                <td><%= friend.email %>
+                <td><%= current_user.common_visits(friend) %>
+                <td><%= link_to 'Remove',
                                 users_friendship_path(friendship, :friend_id => friendship.friend_id),
                                 method: :delete,
                                 :class => "btn btn-danger",
@@ -38,7 +39,7 @@
             <% end %>
           </tbody>
         </table>
-      <% end %>
-    </div>
+      </div>
+    <% end %>
   </div>
 </div>

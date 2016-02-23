@@ -1,0 +1,33 @@
+<% if @restaurant.managers.present? %>
+  <div class="panel panel-default">
+    <div class="panel panel-heading">Managers</div>
+    <div class="panel panel-body">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th>First name</th>
+              <th>Last name</th>
+              <th>Phone number</th>
+              <th>Address</th>
+              <th>Email</th>
+              <th colspan="3"></th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <% @restaurant.managers.each do |manager| %>
+              <tr>
+                <td><%= manager.first_name %>
+                <td><%= manager.last_name %>
+                <td><%= manager.phone_number %>
+                <td><%= manager.address %>
+                <td><%= manager.email %>
+              </tr>
+            <% end %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+<% end %>

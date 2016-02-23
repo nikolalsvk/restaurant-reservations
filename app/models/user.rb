@@ -43,11 +43,28 @@ class User < ActiveRecord::Base
       return "Not rated yet"
     else
       rating = ratings.sum / ratings.count
+      rating.round(2)
     end
   end
 
   def friend?(guest)
     !self.friendships.where(:user_id => self.id, :friend_id => guest.id).empty?
+  end
+
+  def friendship(friend)
+    Friendship.where(:user_id => self.id, :friend_id => friend.id).first
+  end
+
+  def common_visits(friend)
+    if self.reviews || !self.reviews.empty?
+      visits = 0
+      self.reviews.each do |review|
+        visits = visits + review.reservation.invitations.where(:user_id => friend.id, :confirmed => true).count
+      end
+      return visits
+    else
+      return "You haven't been anywhere"
+    end
   end
 
   private

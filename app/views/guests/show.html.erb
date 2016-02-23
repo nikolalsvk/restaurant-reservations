@@ -2,7 +2,9 @@
 
   <%= render "guest_info" %>
 
-  <%= render "friendships/friends_table" %>
+  <div class="col-md-8">
+    <%= render "friendships/friends_table", :links_partial => "guest_page_links" %>
+  </div>
 
 </div>
 

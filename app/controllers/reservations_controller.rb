@@ -1,10 +1,10 @@
 class ReservationsController < ApplicationController
   before_action :set_reservation, only: [:show, :edit, :update, :destroy]
-  before_action :set_restaurant, :only => [:create]
+  before_action :set_restaurant, :only => [:create, :index]
   before_action :set_seat_info, :only => [:create]
 
   def index
-    @reservations = current_user.reservations.all
+    @reservations = current_user.reservations.where(:restaurant_id => params[:restaurant_id]).all
   end
 
   def show

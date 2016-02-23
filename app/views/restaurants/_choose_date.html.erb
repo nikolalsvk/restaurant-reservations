@@ -1,0 +1,62 @@
+<div class="col-md-6">
+  <%= form_tag(restaurant_path(@restaurant), :method => :get, :class => "form-inline") do %>
+
+    <%= label_tag :date, "Choose a date for your reservation" %>
+
+        <% if params[:date] && params[:duration] %>
+          <div class="form-group">
+            <%= text_field_tag :date,
+                               params[:date],
+                               :class => "form-control",
+                               :disabled => true %>
+          </div>
+          <p>
+          <div class="form-group">
+            <%= label_tag :duration, "How long would you like to stay?" %>
+            <%= text_field_tag :duration,
+                               params[:duration],
+                               :class => "form-control",
+                               :disabled => true %>
+          </div>
+        <% else %>
+          <div class='input-group date' id='datetimepicker1'>
+            <%= text_field_tag :date,
+                               params[:date],
+                               :class => "form-control" %>
+            <span class="input-group-addon">
+              <span class="glyphicon glyphicon-calendar"></span>
+            </span>
+          </div>
+          <p>
+          <div class="form-group">
+            <%= label_tag :duration, "How long would you like to stay?" %>
+            <%= select_tag :duration, "<option>1 hour</option>
+                                      <option>2 hours</option>
+                                      <option>3 hours</option>
+                                      <option>4 hours</option>
+                                      <option>5 hours</option>
+                                      <option>6 hours</option>".html_safe,
+                                      :class => "form-control" %>
+          </div>
+       <% end %>
+
+    <%= submit_tag "Show", :class => "form-control" %></br>
+  <% end %>
+</div>
+<div class="col-md-6">
+  <div class="panel panel-default">
+    <div class="panel panel-body">
+      <div class="row">
+        <div data-toggle="buttons" class="btn-group itemcontent">
+          <%= empty_check_box %> - Empty space
+        </div>
+        <div data-toggle="buttons" class="btn-group itemcontent">
+          <%= reserved_check_box %> - Reserved table
+        </div>
+        <div data-toggle="buttons" class="btn-group itemcontent">
+          <%= free_check_box(1, 1, 1) %> - Free table (clickable)
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

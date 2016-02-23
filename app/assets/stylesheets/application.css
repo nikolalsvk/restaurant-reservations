@@ -48,8 +48,16 @@ body {
 }
 
 .configuration-check-box {
-  width: 30px;
-  height: 30px;
+  width: 25px;
+  height: 25px;
+}
+
+label.btn.btn-default.active {
+  background-color: #0288D1 !important;
+}
+
+.panel {
+  overflow: auto;
 }
 
 .panel-footer, .panel-body, .panel-heading {

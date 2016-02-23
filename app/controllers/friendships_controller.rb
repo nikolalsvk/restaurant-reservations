@@ -4,7 +4,11 @@ class FriendshipsController < ApplicationController
   before_action :set_guests, :only => [:index]
 
   def index
-    @friendships = current_user.friendships.all
+    if params[:sort]
+      @friends = User.joins(:friendships).where("friendships.friend_id" => current_user.id).order(params[:sort])
+    else
+      @friends = User.joins(:friendships).where("friendships.friend_id" => current_user.id)
+    end
   end
 
   def show

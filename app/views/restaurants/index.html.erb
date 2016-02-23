@@ -1,35 +1,46 @@
 <h1>Listing Restaurants</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Rating</th>
-      <% if current_user.guest? %>
-        <th>Friends rating</th>
-      <% end %>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @restaurants.each do |restaurant| %>
+<%= link_to "Sort by title",
+            restaurants_path(:sort => "title"),
+            :class => "btn btn-info" %>
+<%= link_to "Sort by description",
+            restaurants_path(:sort => "description"),
+            :class => "btn btn-info" %>
+<%= link_to "Unsort",
+            restaurants_path,
+            :class => "btn btn-info" %>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
       <tr>
-        <td><%= restaurant.title %></td>
-        <td><%= restaurant.description %></td>
-        <td><%= restaurant.rating == 0 ? "Not rated yet" : restaurant.rating %>
+        <th>Title</th>
+        <th>Description</th>
+        <th>Rating</th>
         <% if current_user.guest? %>
-          <td><%= current_user.friends_rating(restaurant.id) %>
+          <th>Friends rating</th>
         <% end %>
-        <td><%= link_to 'Reservation', restaurant %></td>
-        <td><%= link_to 'Your reservations', restaurant_reservations_path(restaurant) %>
-        <td><%= link_to 'Edit', edit_restaurant_path(restaurant) if current_user.restaurant_manager(restaurant) %></td>
-        <td><%= link_to 'Destroy', restaurant, method: :delete, data: { confirm: 'Are you sure?' }  if current_user.admin? %></td>
+        <th colspan="3"></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+
+    <tbody>
+      <% @restaurants.each do |restaurant| %>
+        <tr>
+          <td><%= restaurant.title %></td>
+          <td><%= restaurant.description %></td>
+          <td><%= restaurant.rating == 0 ? "Not rated yet" : restaurant.rating.round(2) %>
+          <% if current_user.guest? %>
+            <td><%= current_user.friends_rating(restaurant.id) %>
+          <% end %>
+          <td><%= link_to 'Reservation', restaurant %></td>
+          <td><%= link_to 'Your reservations', restaurant_reservations_path(restaurant) %>
+          <td><%= link_to 'Edit', edit_restaurant_path(restaurant) if current_user.restaurant_manager(restaurant) %></td>
+          <td><%= link_to 'Destroy', restaurant, method: :delete, data: { confirm: 'Are you sure?' }  if current_user.admin? %></td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
 
 <br>
 
