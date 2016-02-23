@@ -6,22 +6,22 @@ Faculty of Technical Sciences in Novi Sad.
 How to run?
 
 1. Install gems with:
-```
-$ bundle
-```
+  ```
+  $ bundle
+  ```
 2. Create database
-```
-$ bundle exec rake db:create db:migrate db:test:prepare
-```
+  ```
+  $ bundle exec rake db:create db:migrate db:test:prepare
+  ```
 3. Seed some users and restaurants
-```
-$ bundle exec rake db:seed
-```
+  ```
+  $ bundle exec rake db:seed
+  ```
 4. Run Rails server
-```
-$ bundle exec rails s
-```
-5. Visit [http://localhost:3000/]
+  ```
+  $ bundle exec rails s
+  ```
+5. Visit [http://localhost:3000/](http://localhost:3000/)
 
 
 Enjoy :)
