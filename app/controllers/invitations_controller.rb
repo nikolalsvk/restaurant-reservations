@@ -6,20 +6,25 @@ class InvitationsController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :record_not_found
 
   def index
-    @invitations = Invitation.all
+    @invitations = current_user.invitations.all
   end
 
   def show
   end
 
   def update
-    respond_to do |format|
-      if @invitation.update(invitation_params)
-        format.html { redirect_to root_path, notice: "Thanks #{@user.first_name}, you have accepted an invitation to #{@invitation.restaurant.title} restaurant." }
-        format.json { render :show, status: :ok, location: @invitation }
-      else
-        format.html { render :edit }
-        format.json { render json: @invitation.errors, status: :unprocessable_entity }
+    if @invitation.updated_at == @invitation.created_at
+      respond_to do |format|
+        if @invitation.update(invitation_params)
+          format.html { redirect_to root_path, notice: "Thanks #{@user.first_name}, you have accepted an invitation to #{@invitation.restaurant.title} restaurant." }
+        else
+          format.html { render :edit }
+          format.json { render json: @invitation.errors, status: :unprocessable_entity }
+        end
+      end
+    else
+      respond_to do |format|
+        format.html { redirect_to root_path, alert: "This invitation has been handled" }
       end
     end
   end
@@ -35,12 +40,13 @@ class InvitationsController < ApplicationController
   private
   def set_invitation
     if current_user
-      if params[:guest_id] && current_user.id == params[:guest_id]
+      if params[:guest_id] && current_user.id == params[:guest_id].to_i
         @invitation = current_user.invitations.find(params[:id])
         @user = current_user
       else
-        @invitation = current_user.invitations.find(params[:id])
-        @user = current_user
+        sign_out current_user
+        @user = Guest.find(params[:guest_id])
+        @invitation = @user.invitations.find(params[:id])
       end
     else
       @user = Guest.find(params[:guest_id])

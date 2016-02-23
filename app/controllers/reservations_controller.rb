@@ -45,9 +45,9 @@ class ReservationsController < ApplicationController
         @friends_info.each do |friend|
           friend = Guest.where(:id => friend[:friend_id]).first
 
-          invitation = friend.invitations.create!(:user_id => current_user.id,
+          invitation = friend.invitations.create!(:user_id => friend.id,
                                                   :reservation_id => @reservation.id,
-                                                  :confirmed => false)
+                                                  :confirmed => nil)
           InvitationMailer.invitation_mail(friend, invitation).deliver_now
         end
 

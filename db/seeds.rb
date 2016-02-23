@@ -44,6 +44,19 @@ configuration_1 = SeatsConfiguration.new(:restaurant_id => all_u_can_eat.id)
 end
 configuration_1.save!
 
+meals = ["Soup", "Rigoto", "Pljeskavica", "Belo meso", "Stake", "Bread", "Cheese",
+         "Carrots", "Pork", "Cake"]
+descriptions = ["Delicious", "Nice", "Mouth-watering", "Pleasing", "Eatable", "Cheap",
+                "Easy", "Hard"]
+
+Restaurant.all.each do |restaurant|
+  5.times do
+    restaurant.menu.meals.create!(:title => meals[rand(8)],
+                                  :description => descriptions[rand(7)],
+                                  :price => rand(1000))
+  end
+end
+
 
 
 p "Creating managers"
@@ -81,12 +94,23 @@ valid_email.count.times do |number|
   guest.skip_confirmation!
   guest.save!
 
-  5.times do
-    Reservation.create!(:date => Time.now - rand(1..4).days,
-                        :duration => 1,
-                        :restaurant_id => rand(1..3),
-                        :user_id => guest.id)
+  unless number == 0 || number == valid_email.count
+    friend = Guest.where.not(:email => guest.email).offset(rand(number)).first
+    Friendship.create(:user_id => guest.id, :friend_id => friend.id)
+    Friendship.create(:friend_id => guest.id, :user_id => friend.id)
+  end
 
+  rand(3).times do |number|
+    reservation = Reservation.create!(:date => Time.now - rand(1..30).days,
+                                      :duration => 1,
+                                      :restaurant_id => number + 1,
+                                      :user_id => guest.id)
+    unless guest.friendships.empty?
+      friend = guest.friendships.first.friend
+      invitation = friend.invitations.create!(:user_id => friend.id,
+                                              :reservation_id => reservation.id,
+                                              :confirmed => true)
+    end
 
   end
 end

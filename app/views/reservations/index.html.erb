@@ -3,23 +3,44 @@
 <% if @reservations.empty? %>
   You havent made any reservations yet.
 <% else %>
-  <table>
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Duration</th>
-        <th colspan="3"></th>
-      </tr>
-    </thead>
-
-    <tbody>
-      <% @reservations.each do |reservation| %>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
         <tr>
-          <td><%= reservation.date %></td>
-          <td><%= reservation.duration %></td>
-          <td><%= link_to 'Show', restaurant_reservation_path(reservation.restaurant, reservation) %></td>
+          <th>Date</th>
+          <th>Duration</th>
+          <th>Rating</th>
+          <th>Friends</th>
+          <th colspan="3"></th>
         </tr>
-      <% end %>
-    </tbody>
-  </table>
+      </thead>
+
+      <tbody>
+        <% @reservations.each do |reservation| %>
+          <tr>
+            <td><%= l reservation.date, :format => :date_with_time %></td>
+            <td><%= reservation.duration %></td>
+            <td><%= link_to 'Show', restaurant_reservation_path(reservation.restaurant, reservation) %></td>
+            <td>
+              <% if reservation.invitations.empty? %>
+                You went alone
+              <% else %>
+                <% reservation.invitations.each do |invite| %>
+                  <% if current_user.id == invite.user_id %>
+
+                    <b><%= reservation.user.first_name %> <%= reservation.user.last_name %> </b> - they invited you
+
+                  <% else %>
+
+                    <b><%= invite.first_name %> <%= invite.last_name %> </b><%= check_box_tag(:confirmed, invite.confirmed, invite.confirmed, :disabled => true) %>
+
+                  <% end %>
+                <% end %>
+              <% end %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>

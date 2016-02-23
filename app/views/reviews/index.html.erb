@@ -1,4 +1,4 @@
-<h1>Listing Reviews</h1>
+<h1>Listing Vistis</h1>
 
 <% current_user.reservations.each { |res| res.expired? } %>
 <% current_user.invitations.each { |res| res.expired? } %>
@@ -19,7 +19,7 @@
       <% @reviews.each do |review| %>
         <tr>
           <td><%= review.restaurant.title %>
-          <td><%= review.reservation.date %>
+          <td><%= l review.reservation.date, :format => :date_with_time %>
           <td><%= review.reservation.duration %>
           <td><%= review.rating ? review.rating : "Not yet rated" %>
           <td><%= link_to 'Show', users_review_path(review) %></td>

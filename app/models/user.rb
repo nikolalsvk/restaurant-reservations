@@ -59,7 +59,11 @@ class User < ActiveRecord::Base
     if self.reviews || !self.reviews.empty?
       visits = 0
       self.reviews.each do |review|
-        visits = visits + review.reservation.invitations.where(:user_id => friend.id, :confirmed => true).count
+        if review.reservation.user.id == friend.id
+          visits = visits + 1
+        else
+          visits = visits + review.reservation.invitations.where(:user_id => friend.id, :confirmed => true).count
+        end
       end
       return visits
     else

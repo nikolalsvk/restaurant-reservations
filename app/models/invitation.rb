@@ -16,9 +16,11 @@ class Invitation < ActiveRecord::Base
     date_range = self.date.localtime..self.date.localtime + self.duration.hours
 
     unless date_range.cover?(Time.now)
-      unless self.review.present? && !self.confirmed
-        self.create_review!(:restaurant_id => self.restaurant.id,
-                            :user_id => self.user.id)
+      unless self.review.present?
+        if self.confirmed
+          self.create_review!(:restaurant_id => self.restaurant.id,
+                              :user_id => self.user.id)
+        end
       end
     end
 

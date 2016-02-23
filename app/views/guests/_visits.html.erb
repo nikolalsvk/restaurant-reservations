@@ -23,17 +23,21 @@
                 <% current_user.reviews.each do |review| %>
                   <tr>
                     <td><%= review.restaurant.title %>
-                    <td><%= review.reservation.date %>
+                    <td><%= l review.reservation.date, :format => :date_with_time %>
                     <td><%= review.rating ? review.rating : "You haven't rated this restaurant yet" %>
                     <td>
                       <% if review.reservation.invitations.empty? %>
                         You went alone
                       <% else %>
-                        <% review.reservation.invitations.each do |invitation| %>
-                          <% if invitation == review.reservation.invitations.last %>
-                            <%= invitation.user.first_name %>
+                        <% review.reservation.invitations.each do |invite| %>
+                          <% if current_user.id == invite.user_id %>
+
+                            <b><%= invite.reservation.user.first_name %> <%= invite.reservation.user.last_name %> </b> - they invited you
+
                           <% else %>
-                            <%= invitation.user.first_name %>,
+
+                            <%= invite.first_name %> <%= invite.last_name %>
+
                           <% end %>
                         <% end %>
                       <% end %>

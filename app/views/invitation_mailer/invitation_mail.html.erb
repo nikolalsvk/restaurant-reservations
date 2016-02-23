@@ -10,7 +10,7 @@
     <b><%= @invitation.restaurant.title %></b> restaurant.
 
     When?
-    <b><%= @invitation.date %></b>
+    <b><%= l @invitation.date, :format => :date_with_time %></b>
     for
     <b><%= @invitation.duration %> hours</b>
     Who else is coming?
@@ -30,12 +30,13 @@
       <%= button_to "Accept", guest_invitation_url(@user,
                                                    @invitation,
                                                    :invitation => { :confirmed => true }),
-                              :method => :put,
-                              :class => "btn btn-primary" %>
+                                                   :method => :put,
+                                                   :class => "btn btn-primary" %>
       <%= button_to "Decline", guest_invitation_url(@user,
-                                                    @invitation),
-                               :method => :delete,
-                               :class => "btn btn-danger" %>
+                                                    @invitation,
+                                                    :invitation => { :confirmed => false }),
+                                                    :method => :put,
+                                                    :class => "btn btn-danger" %>
      </div>
     <% end %>
     <p>Thanks for joining and have a great day!</p>

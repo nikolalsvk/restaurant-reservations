@@ -5,7 +5,7 @@
 
   <div class="panel panel-body">
     on
-    <strong><%= @review.reservation.date %></strong>
+    <strong><%= l @review.reservation.date, :format => :date_with_time %></strong>
     for
     <strong><%= @review.reservation.duration%> hours</strong>
     <p>
