@@ -72,7 +72,7 @@ Rails.application.configure do
     :port => 587,
     :domain => "localhost:3000",
     :user_name => "nikolaseap",
-    :password => "rmmberths",
+    :password => "",
     :authentication => "plain",
     :enable_starttls_auto => true
   }
