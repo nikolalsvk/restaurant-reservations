@@ -3,7 +3,7 @@
 Ruby on Rails project for Internet Software Architecture subject on
 Faculty of Technical Sciences in Novi Sad.
 
-How to run?
+####How to run?
 
 1. Install gems with:
   ```
