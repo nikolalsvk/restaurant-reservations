@@ -1,0 +1,23 @@
+// Place all the styles related to the welcome controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+#owl-demo .item img{
+  display: block;
+  width: 10% !important;
+  height: 10% !important;
+}
+
+.jumbotron {
+  position: relative;
+  background: #000 url("<%= asset_path("food-pizza-fast-food.jpg") %>") center center;
+  width: 100%;
+  height: 100%;
+  background-size: cover;
+  overflow: hidden;
+  color: #FFF;
+}
+
+.jumbotron.restaurant {
+  background: #000 url("<%= asset_path("bread-breakfast-knife.jpg") %>") center center;
+}
