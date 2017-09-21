@@ -1,6 +1,6 @@
 class Seat < ActiveRecord::Base
 
-  belongs_to :configuration
+  belongs_to :seat_configuration
 
   has_and_belongs_to_many :reservations
 
